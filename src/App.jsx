@@ -45,8 +45,6 @@ const LoftLogo = ({ size = 90 }) => (
     }}
   />
 );
-      <LoftIcon size={size} />
-    </div>
 
     {/* Wordmark: "loft" lowercase, bold serif-ish weight matching brand */}
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0, lineHeight: 1 }}>
