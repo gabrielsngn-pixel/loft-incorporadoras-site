@@ -27,25 +27,17 @@ const C = {
   red: '#E84040',
 };
 
-const SF = { fontFamily: "'DM Serif Display', Georgia, 'Times New Roman', serif" };
-
-// ─── LOFT LOGO SVG ────────────────────────────────────────────────────────────
-// Matches exact Loft BR brand: lowercase "loft" wordmark with the distinctive
-// geometric icon — bold "l" stem with a floating rounded square on upper-right
-
-
 const LoftLogo = ({ size = 90 }) => (
   <img
     src="https://loft.com.br/para-imobiliarias/wp-content/uploads/2025/09/marca-loft-svg.svg"
     alt="Loft"
     style={{
       height: size,
-      width: 'auto',
-      display: 'block',
+      width: "auto",
+      display: "block",
     }}
   />
 );
-
 
 // ─── SHARED COMPONENTS ────────────────────────────────────────────────────────
 const Tag = ({ children, s = {} }) => (
