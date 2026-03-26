@@ -32,28 +32,19 @@ const SF = { fontFamily: "'DM Serif Display', Georgia, 'Times New Roman', serif"
 // ─── LOFT LOGO SVG ────────────────────────────────────────────────────────────
 // Matches exact Loft BR brand: lowercase "loft" wordmark with the distinctive
 // geometric icon — bold "l" stem with a floating rounded square on upper-right
-const LoftIcon = ({ size = 32 }) => (
-  <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Main "l" vertical stem — bold rounded rectangle */}
-    <rect x="8" y="10" width="13" height="30" rx="4" fill="white" />
-    {/* Floating square block — top right, the distinctive brand mark */}
-    <rect x="25" y="10" width="15" height="15" rx="4" fill={C.orange} />
-  </svg>
-);
 
-const LoftLogo = ({ size = 32, showTagline = false }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-    {/* Icon container — dark rounded square matching brand */}
-    <div style={{
-      width: size + 8,
-      height: size + 8,
-      background: '#1a1a1a',
-      borderRadius: 8,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexShrink: 0,
-    }}>
+
+const LoftLogo = ({ size = 90 }) => (
+  <img
+    src="https://loft.com.br/para-imobiliarias/wp-content/uploads/2025/09/marca-loft-svg.svg"
+    alt="Loft"
+    style={{
+      height: size,
+      width: 'auto',
+      display: 'block',
+    }}
+  />
+);
       <LoftIcon size={size} />
     </div>
 
