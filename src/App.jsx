@@ -1,419 +1,398 @@
-import React, { useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  ArrowRight, Zap, BarChart3, Clock, ShieldCheck, 
-  Home, FileText, Cpu, Landmark, DollarSign, 
-  Search, Compass, FileCheck, MessageCircle, AlertTriangle
+  ArrowRight, Landmark, BarChart3, Cpu, MessageCircle, 
+  FileText, Check, Zap, AlertTriangle, ChevronRight,
+  ShieldCheck, ArrowUpRight, Activity
 } from 'lucide-react';
 
-// --- BACKGROUND GRID COMPONENT ---
+// --- STYLES & UTILS ---
+const bgDark = "bg-[#0a0a0a]";
+const bgCard = "bg-[#141414]";
+const borderSubtle = "border-[#262626]";
+const textMuted = "text-[#a3a3a3]";
+
+// --- COMPONENT: BACKGROUND GRID ---
 const BackgroundGrid = () => (
-  <div className="absolute inset-0 pointer-events-none z-0" style={{ 
-    backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)`,
-    backgroundSize: '4rem 4rem'
-  }}>
-    <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/50 via-transparent to-[#0a0a0a]" />
+  <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+    <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]" />
+    <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-orange-500 opacity-20 blur-[100px]" />
   </div>
 );
 
-// --- 1. HERO SECTION ---
-const HeroSection = () => {
-  return (
-    <section className="relative min-h-[100vh] pt-32 pb-20 flex items-center bg-[#0a0a0a] overflow-hidden">
-      <BackgroundGrid />
+// --- 1. NAVBAR ---
+const Navbar = () => (
+  <nav className="fixed top-0 w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5 px-6 py-4">
+    <div className="max-w-7xl mx-auto flex justify-between items-center">
+      <div className="flex items-center gap-4">
+        <div className="text-white font-black text-3xl tracking-tighter flex items-center">
+          loft <span className="text-orange-500 ml-1">|</span>
+        </div>
+        <div className="h-6 w-px bg-white/10 mx-2" />
+        <div className="text-[10px] text-[#a3a3a3] font-bold uppercase tracking-widest leading-tight">
+          Canal<br/>Incorporações
+        </div>
+      </div>
       
-      <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-[#a3a3a3]">
+        <a href="#" className="hover:text-white transition-colors">Infraestrutura</a>
+        <a href="#" className="hover:text-white transition-colors">Ecossistema</a>
+        <a href="#" className="hover:text-white transition-colors">Resultados</a>
+        <a href="#" className="hover:text-white transition-colors">Como Funciona</a>
+      </div>
+
+      <button className="bg-[#ff6600] hover:bg-[#e65c00] text-white font-bold px-6 py-2.5 rounded-lg text-sm transition-all shadow-[0_0_20px_rgba(255,102,0,0.2)]">
+        Falar com especialista
+      </button>
+    </div>
+  </nav>
+);
+
+// --- 2. HERO SECTION ---
+const HeroSection = () => (
+  <section className={`relative min-h-screen pt-32 pb-20 flex items-center ${bgDark}`}>
+    <BackgroundGrid />
+    <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="space-y-8">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ff6600]/30 bg-[#ff6600]/10 text-[#ff6600] text-[11px] font-bold tracking-widest uppercase">
+          <Activity size={14} className="animate-pulse" />
+          A infraestrutura dominante do crédito
+        </div>
         
-        {/* Left Copy */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="space-y-8"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-500 text-xs font-bold tracking-widest uppercase">
-            <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-            A infraestrutura dominante do crédito imobiliário
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.1]">
-            VGV vendido não é caixa. <span className="text-orange-500">E isso está custando caro.</span>
-          </h1>
+        <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.05]">
+          VGV vendido não é caixa.<br/>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff6600] to-[#ff8533]">
+            E isso custa caro.
+          </span>
+        </h1>
 
-          <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-5 flex items-start gap-4">
-            <AlertTriangle className="text-orange-500 shrink-0 mt-1" size={24} />
-            <p className="text-zinc-300 text-sm md:text-base leading-relaxed">
-              Cada semana de repasse atrasado custa à sua incorporadora entre <strong>0,5% e 1% do VGV</strong> em custo financeiro. 
-              Numa obra de <strong>R$50M</strong>, isso é <strong className="text-orange-400">R$250–500K evitáveis por mês.</strong>
-            </p>
-          </div>
-
-          <p className="text-lg text-zinc-400 max-w-lg">
-            A Loft transforma VGV em caixa <strong className="text-white">35% mais rápido</strong> — conectando vendas, documentos, bancos e capital em uma única infraestrutura.
+        <div className="bg-[#ff6600]/5 border border-[#ff6600]/20 rounded-xl p-5 flex items-start gap-4 max-w-xl">
+          <AlertTriangle className="text-[#ff6600] shrink-0 mt-0.5" size={20} />
+          <p className="text-zinc-300 text-sm leading-relaxed">
+            Semanas de atraso custam à incorporadora entre <strong>0,5% e 1% do VGV</strong> em custo financeiro. 
+            Numa obra de R$50M, são <strong className="text-[#ff6600]">R$250–500K perdidos por mês.</strong>
           </p>
+        </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="px-8 py-4 bg-orange-500 text-white rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-orange-600 transition-colors">
-              <Zap size={20} /> Destravar caixa agora
-            </motion.button>
-            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="px-8 py-4 bg-transparent border border-white/20 text-white rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-white/5 transition-colors">
-              <BarChart3 size={20} /> Simular operação
-            </motion.button>
+        <p className="text-lg text-[#a3a3a3] max-w-lg">
+          A Loft transforma VGV em caixa <strong className="text-white">35% mais rápido</strong>. Conectamos vendas, documentos, bancos e capital em um único ecossistema operacional.
+        </p>
+
+        <div className="flex gap-4 pt-2">
+          <button className="px-8 py-4 bg-[#ff6600] text-white rounded-lg font-bold flex items-center gap-2 hover:bg-[#e65c00] transition-colors">
+            <Zap size={18} /> Destravar caixa agora
+          </button>
+        </div>
+      </motion.div>
+
+      {/* Abstract Tech Visual */}
+      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.2 }} className="relative h-[500px] w-full hidden lg:block">
+        <div className="absolute inset-0 bg-[#141414] rounded-2xl border border-[#262626] shadow-2xl overflow-hidden flex flex-col">
+          {/* Header Mockup */}
+          <div className="h-12 border-b border-[#262626] bg-[#1a1a1a] flex items-center px-4 gap-2">
+            <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-[#ff4444]" /><div className="w-2.5 h-2.5 rounded-full bg-[#ffbb00]" /><div className="w-2.5 h-2.5 rounded-full bg-[#00cc44]" /></div>
+            <div className="mx-auto bg-[#111] border border-[#262626] rounded-md px-24 py-1 text-[10px] text-[#555]">loft.com.br/os</div>
           </div>
-        </motion.div>
-
-        {/* Right UI Mockup */}
-        <motion.div 
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="relative"
-        >
-          {/* Main Dashboard Card */}
-          <div className="bg-[#111] border border-white/10 rounded-2xl shadow-2xl overflow-hidden relative z-10">
-            {/* Header */}
-            <div className="flex justify-between items-center px-6 py-4 border-b border-white/10 bg-white/5">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Loft OS • Sistema Ativo</span>
+          {/* Body Mockup */}
+          <div className="p-8 flex-1 flex flex-col gap-6 relative">
+            <div className="flex justify-between items-end">
+              <div>
+                <div className="text-[10px] text-[#ff6600] font-bold uppercase tracking-wider mb-1">Repasse Ativo</div>
+                <div className="text-3xl font-bold text-white">R$ 12.800.000</div>
               </div>
-              <span className="text-xs text-zinc-500">23/03/2026 • 14:38</span>
+              <div className="text-right">
+                <div className="text-[10px] text-zinc-500 uppercase tracking-wider mb-1">Tempo Médio</div>
+                <div className="text-xl font-bold text-[#00cc44]">15 Dias</div>
+              </div>
             </div>
             
-            <div className="p-6 space-y-8">
-              {/* Value Area */}
-              <div>
-                <div className="text-xs font-medium text-zinc-500 uppercase mb-1">Operação Ativa</div>
-                <div className="text-4xl font-bold text-white mb-1">R$ 12.8M</div>
-                <div className="text-sm text-zinc-400">Construtora Atlântico • Rio de Janeiro</div>
-              </div>
+            {/* Animated Progress Bars */}
+            <div className="space-y-4 flex-1">
+               {['Análise de Crédito', 'Aprovação Multibanco', 'Assinatura', 'Liberação de Caixa'].map((step, i) => (
+                 <div key={step} className="space-y-2">
+                   <div className="flex justify-between text-xs font-medium text-[#a3a3a3]">
+                     <span>{step}</span>
+                     <span className={i === 3 ? "text-[#ff6600]" : ""}>{i === 3 ? "Em andamento" : "Concluído"}</span>
+                   </div>
+                   <div className="h-2 w-full bg-[#1a1a1a] rounded-full overflow-hidden">
+                     <motion.div 
+                       initial={{ width: 0 }}
+                       animate={{ width: i === 3 ? "60%" : "100%" }}
+                       transition={{ duration: 1.5, delay: 0.5 + (i * 0.2) }}
+                       className={`h-full ${i === 3 ? 'bg-[#ff6600] relative' : 'bg-[#333]'}`}
+                     >
+                       {i === 3 && <div className="absolute top-0 right-0 w-8 h-full bg-white/30 animate-pulse" />}
+                     </motion.div>
+                   </div>
+                 </div>
+               ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  </section>
+);
 
-              {/* Progress */}
-              <div className="space-y-4">
-                <div className="text-xs font-medium text-zinc-500 uppercase">Progresso do repasse</div>
-                <div className="relative">
-                  <div className="absolute top-3 left-0 w-full h-1 bg-zinc-800 rounded-full" />
-                  <motion.div initial={{ width: 0 }} animate={{ width: "80%" }} transition={{ duration: 1.5, delay: 0.5 }} className="absolute top-3 left-0 h-1 bg-orange-500 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.8)]" />
-                  
-                  <div className="relative flex justify-between">
-                    {['Contrato', 'Documentação', 'Análise Loft', 'Banco', 'Caixa'].map((step, i) => (
-                      <div key={step} className="flex flex-col items-center gap-2">
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] ${i < 4 ? 'bg-orange-500 text-white' : 'bg-zinc-800 text-zinc-500 border border-zinc-700'}`}>
-                           {i < 4 ? '✓' : ''}
+// --- 3. PIXEL-PERFECT ECOSYSTEM TABS (Based on the new uploaded image) ---
+const EcosystemTabs = () => {
+  const [activeId, setActiveId] = useState('aiforce');
+
+  const tabs = [
+    {
+      id: 'multibanco',
+      icon: Landmark,
+      title: "Plataforma Multibanco",
+      subtitle: "Um cadastro. Todos os bancos.",
+      tag: "CORE",
+      pillVal: "98%", pillText: "aprovação média",
+      contentTitle: "Plataforma Multibanco",
+      desc: "Um único cadastro conecta sua operação a todos os grandes bancos simultaneamente. Mais competição de taxas, maior aprovação e velocidade que nenhum banco isolado consegue oferecer.",
+      checks: ["Um único cadastro com distribuição inteligente", "Conexão simultânea com Itaú, Bradesco, Caixa e mais", "Maximização matemática de aprovação"]
+    },
+    {
+      id: 'portal',
+      icon: BarChart3,
+      title: "Portal do Parceiro",
+      subtitle: "Dashboard completo do funil.",
+      tag: "GESTÃO",
+      pillVal: "100%", pillText: "de visibilidade",
+      contentTitle: "Cockpit de Gestão em Tempo Real",
+      desc: "Transparência total e controle absoluto sobre todo o funil de crédito. Dashboard inteligente com indicadores de performance e status de cada proposta, eliminando a 'caixa preta' do repasse.",
+      checks: ["Visão consolidada do VGV em esteira", "Alertas automáticos de pendências documentais", "Métricas de conversão por empreendimento"]
+    },
+    {
+      id: 'simulador',
+      icon: Cpu,
+      title: "Simulador Inteligente",
+      subtitle: "Converta no topo do funil.",
+      tag: "VENDAS",
+      pillVal: "3x", pillText: "mais conversão",
+      contentTitle: "Simulador Personalizado",
+      desc: "Experiência integrada diretamente ao site do parceiro. Transforme visitantes em leads altamente qualificados entregando simulações reais e precisas que aceleram a decisão de compra.",
+      checks: ["Captura de dados no momento de maior intenção", "Integração via API com seu CRM nativo", "Cálculo de taxas atualizado em tempo real"]
+    },
+    {
+      id: 'whatsapp',
+      icon: MessageCircle,
+      title: "Assistente via WhatsApp",
+      subtitle: "Simulação em segundos.",
+      tag: "AGILIDADE",
+      pillVal: "15s", pillText: "para resposta",
+      contentTitle: "Financiamento na velocidade do chat",
+      desc: "Toda a inteligência da Loft disponível 24/7 na palma da mão do seu corretor. Simulações completas e respostas instantâneas com comparativo de taxas multibanco direto no WhatsApp.",
+      checks: ["Autonomia total para o time de corretores", "Geração de PDFs comparativos na hora", "Zero necessidade de acessar portais complexos"]
+    },
+    {
+      id: 'aiforce',
+      icon: FileText,
+      title: "AI Force",
+      subtitle: "Zero erro humano.",
+      tag: "TECNOLOGIA",
+      pillVal: "0%", pillText: "erro de digitação",
+      contentTitle: "AI Force Extraction",
+      desc: "Extração automatizada de dados de mais de 10 tipos de documentos (CNH, Matrícula, IPTU). O que levava horas agora leva segundos, sem refação.",
+      checks: ["Leitura OCR avançada", "Validação cruzada de dados", "Adequação automática aos padrões bancários"]
+    }
+  ];
+
+  return (
+    <section className={`py-32 ${bgDark}`}>
+      <div className="max-w-[1200px] mx-auto px-6">
+        <div className="text-center mb-20">
+          <div className="text-[#ff6600] text-[11px] font-bold tracking-widest uppercase mb-4">Arquitetura modular</div>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">
+            O Sistema Operacional do Repasse
+          </h2>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-6">
+          
+          {/* Left Column: Tab List */}
+          <div className="lg:w-[35%] flex flex-col gap-2.5">
+            {tabs.map((tab) => {
+              const isActive = activeId === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveId(tab.id)}
+                  className={`flex items-center text-left p-5 rounded-xl border transition-all duration-200 group
+                    ${isActive 
+                      ? 'bg-[#ff6600] border-[#ff6600] shadow-[0_4px_20px_rgba(255,102,0,0.3)]' 
+                      : 'bg-[#141414] border-[#262626] hover:border-[#404040]'}`}
+                >
+                  <div className={`mr-4 transition-colors ${isActive ? 'text-white' : 'text-[#ff6600]'}`}>
+                    <tab.icon size={24} strokeWidth={1.5} />
+                  </div>
+                  <div className="flex-1">
+                    <div className={`font-bold text-[15px] mb-0.5 ${isActive ? 'text-white' : 'text-[#e5e5e5]'}`}>
+                      {tab.title}
+                    </div>
+                    <div className={`text-[13px] ${isActive ? 'text-white/80' : 'text-[#737373]'}`}>
+                      {tab.subtitle}
+                    </div>
+                  </div>
+                  {isActive && <ArrowRight size={18} className="text-white ml-2" />}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right Column: Active Content */}
+          <div className="lg:w-[65%]">
+            <AnimatePresence mode="wait">
+              {tabs.map((tab) => tab.id === activeId && (
+                <motion.div
+                  key={tab.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="bg-[#141414] border border-[#262626] rounded-2xl p-10 h-full flex flex-col"
+                >
+                  {/* Header */}
+                  <div className="flex items-start gap-6 mb-8">
+                    {/* Icon Box */}
+                    <div className="w-[72px] h-[72px] rounded-2xl bg-[#ff6600] flex items-center justify-center shrink-0">
+                      <tab.icon size={36} className="text-white" strokeWidth={1.5} />
+                    </div>
+                    
+                    <div className="flex flex-col justify-center pt-1">
+                      {/* Tag */}
+                      <div className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-widest bg-[#2a1708] text-[#ff6600] uppercase mb-2 w-max">
+                        {tab.tag}
+                      </div>
+                      <h3 className="text-3xl font-extrabold text-white">
+                        {tab.contentTitle}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Highlight Pill */}
+                  <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-[#333] bg-[#1a1a1a] w-max mb-8">
+                    <span className="text-[#ff6600] font-bold mr-2">{tab.pillVal}</span>
+                    <span className="text-[#a3a3a3] text-sm">{tab.pillText}</span>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-[17px] leading-relaxed text-[#a3a3a3] mb-10">
+                    {tab.desc}
+                  </p>
+
+                  {/* Checklist */}
+                  <div className="space-y-4 mt-auto">
+                    {tab.checks.map((check, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <div className="w-[22px] h-[22px] rounded-full bg-[#2a1708] flex items-center justify-center shrink-0 mt-0.5">
+                          <Check size={12} strokeWidth={3} className="text-[#ff6600]" />
                         </div>
-                        <span className="text-[10px] text-zinc-400 font-medium">{step}</span>
+                        <span className="text-[#e5e5e5] text-[15px]">{check}</span>
                       </div>
                     ))}
                   </div>
-                </div>
-              </div>
-
-              {/* Approvals */}
-              <div className="space-y-3">
-                <div className="text-xs font-medium text-zinc-500 uppercase mb-2">Aprovações Paralelas</div>
-                {[
-                  { bank: 'Caixa Econômica', rate: '10.2% a.a.', status: 'Aprovado', color: 'bg-green-500/20 text-green-400' },
-                  { bank: 'Bradesco', rate: '10.5% a.a.', status: 'Aprovado', color: 'bg-green-500/20 text-green-400' },
-                  { bank: 'Itaú', rate: '10.8% a.a.', status: 'Em análise', color: 'bg-orange-500/20 text-orange-400' }
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-2 h-2 rounded-full ${item.status === 'Aprovado' ? 'bg-green-500' : 'bg-orange-500'}`} />
-                      <span className="text-sm font-medium text-zinc-300">{item.bank}</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span className="text-sm text-zinc-400">{item.rate}</span>
-                      <span className={`text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider ${item.color}`}>{item.status}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Bottom Metrics */}
-              <div className="grid grid-cols-3 gap-2 pt-2">
-                <div className="col-span-1 border border-orange-500/30 bg-orange-500/5 rounded-lg p-3">
-                  <div className="text-[10px] text-orange-500 uppercase font-bold mb-1">Capital Recuperado</div>
-                  <div className="text-lg font-bold text-white">+R$ 2.4M</div>
-                  <div className="text-[10px] text-zinc-500">vs. processo tradicional</div>
-                </div>
-                <div className="border border-white/5 bg-white/5 rounded-lg p-3 flex flex-col justify-center">
-                  <div className="text-[10px] text-zinc-500 uppercase mb-1">Tempo Total</div>
-                  <div className="text-sm font-bold text-white">15 dias</div>
-                </div>
-                <div className="border border-white/5 bg-white/5 rounded-lg p-3 flex flex-col justify-center">
-                  <div className="text-[10px] text-zinc-500 uppercase mb-1">Taxa Final</div>
-                  <div className="text-sm font-bold text-green-400">10.2% a.a.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Floating 'Vs Mercado' Card */}
-          <motion.div 
-            animate={{ y: [0, -10, 0] }} 
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -right-8 top-16 bg-white rounded-xl p-5 shadow-2xl z-20 border border-zinc-200"
-          >
-            <div className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider mb-4">VS. Mercado</div>
-            <div className="flex items-end gap-6 h-24">
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-12 bg-orange-500 rounded-t-sm h-[30%]" />
-                <span className="text-xs font-bold text-zinc-800">Loft<br/><span className="text-orange-500">15d</span></span>
-              </div>
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-12 bg-zinc-200 rounded-t-sm h-full" />
-                <span className="text-xs font-bold text-zinc-400">Mercado<br/>45d</span>
-              </div>
-            </div>
-          </motion.div>
-
-        </motion.div>
-      </div>
-    </section>
-  );
-};
-
-// --- 2. ARCHITECTURE FLOW (Image 1) ---
-const ArchitectureSection = () => {
-  const steps = [
-    { icon: Home, title: "Venda", items: ["VGV contratado", "Comprador qualificado", "Contrato assinado"], active: false },
-    { icon: FileText, title: "Documentação", items: ["Leitura por IA", "AI Force + Loft Check", "Dossiê automático"], active: false },
-    { icon: Cpu, title: "Loft OS", items: ["Motor multibanco", "Roteamento inteligente", "Score otimizado"], active: true },
-    { icon: Landmark, title: "Bancos", items: ["6+ instituições", "Competição de taxas", "Aprovação 98%"], active: false },
-    { icon: DollarSign, title: "Caixa", items: ["Liberação em 15 dias", "-3 p.p. custo", "VGV realizado"], active: false },
-  ];
-
-  return (
-    <section className="py-32 bg-[#050505] relative border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-24">
-          <div className="text-orange-500 text-sm font-bold tracking-widest uppercase mb-4">Arquitetura</div>
-          <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">
-            Assessoria não é serviço.<br/><span className="text-orange-500">É infraestrutura.</span>
-          </h2>
-          <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
-            Um sistema operacional que processa vendas e devolve capital — eliminando cada gargalo entre contrato e caixa.
-          </p>
-        </div>
-
-        <div className="relative">
-          {/* Main horizontal line */}
-          <div className="absolute top-12 left-0 w-full h-0.5 bg-zinc-800 z-0" />
-          <motion.div initial={{ width: 0 }} whileInView={{ width: "50%" }} transition={{ duration: 1.5 }} className="absolute top-12 left-0 h-0.5 bg-orange-500 z-0" />
-
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 relative z-10">
-            {steps.map((step, idx) => (
-              <div key={idx} className="flex flex-col items-center text-center">
-                <div className={`w-24 h-24 rounded-2xl flex items-center justify-center mb-6 border transition-all duration-300 relative
-                  ${step.active ? 'bg-orange-500 border-orange-400 shadow-[0_0_30px_rgba(249,115,22,0.4)] scale-110' : 'bg-[#111] border-white/10 text-orange-500'}`}
-                >
-                  <step.icon size={32} className={step.active ? 'text-white' : ''} />
-                  {step.active && (
-                    <motion.div animate={{ rotate: 360 }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} className="absolute -top-2 -right-2 w-6 h-6 bg-white text-orange-500 rounded-full flex items-center justify-center">
-                      <Zap size={12} />
-                    </motion.div>
-                  )}
-                </div>
-                
-                <h3 className={`font-bold mb-4 ${step.active ? 'text-orange-500' : 'text-white'}`}>{step.title}</h3>
-                
-                <div className={`w-full p-4 rounded-xl border flex flex-col gap-2 text-sm
-                  ${step.active ? 'bg-[#1a110a] border-orange-500/30' : 'bg-[#111] border-white/10'}`}>
-                  {step.items.map((item, i) => (
-                    <span key={i} className={step.active ? 'text-orange-200 font-medium' : 'text-zinc-500'}>{item}</span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- 3. ECOSYSTEM TABS (Image 3) ---
-const EcosystemSection = () => {
-  const [activeTab, setActiveTab] = useState(0);
-
-  const tabs = [
-    { id: 0, icon: Landmark, title: "Plataforma Multibanco", sub: "Um cadastro. Todos os bancos.", content: { tag: "CORE", title: "Plataforma Multibanco", stat: "98%", statDesc: "aprovação média", desc: "Um único cadastro conecta sua operação a todos os grandes bancos simultaneamente. Mais competição de taxas, maior aprovação e velocidade que nenhum banco isolado consegue oferecer.", checks: ["Um único cadastro", "Conexão com todos os grandes bancos", "Maximização de aprovação"] } },
-    { id: 1, icon: BarChart3, title: "Portal do Parceiro", sub: "Dashboard completo do funil.", content: { tag: "GESTAO", title: "Portal do Parceiro", stat: "100%", statDesc: "visibilidade", desc: "Acompanhe todo o pipeline de repasse em tempo real. Saiba exatamente onde cada contrato está travado e tome decisões baseadas em dados atualizados instantaneamente.", checks: ["Visão de funil ponta a ponta", "Relatórios customizados", "Alertas de gargalos"] } },
-    { id: 2, icon: Cpu, title: "Simulador Inteligente", sub: "Converta no topo do funil.", content: { tag: "VENDAS", title: "Simulador Integrado", stat: "3x", statDesc: "mais conversão", desc: "Integre nosso motor diretamente no site do seu empreendimento. O cliente simula e você recebe o lead já qualificado e com a rota de crédito desenhada.", checks: ["White-label para seu site", "Captura de leads quentes", "Simulação real (não estimativa)"] } },
-    { id: 3, icon: MessageCircle, title: "Assistente via WhatsApp", sub: "Simulação em segundos.", content: { tag: "AGILIDADE", title: "Assistente WhatsApp", stat: "15s", statDesc: "tempo de resposta", desc: "Seu corretor não precisa abrir o computador. Basta enviar os dados no WhatsApp e nossa inteligência devolve a aprovação e comparação de taxas na hora.", checks: ["Disponível 24/7", "Comparativo multibanco na hora", "Zero fricção para o corretor"] } },
-    { id: 4, icon: FileCheck, title: "AI Force", sub: "Zero erro humano.", content: { tag: "TECNOLOGIA", title: "AI Force Extraction", stat: "0%", statDesc: "erro de digitação", desc: "Extração automatizada de dados de mais de 10 tipos de documentos (CNH, Matrícula, IPTU). O que levava horas agora leva segundos, sem refação.", checks: ["Leitura OCR avançada", "Validação cruzada de dados", "Adequação automática aos padrões bancários"] } },
-  ];
-
-  return (
-    <section className="py-32 bg-[#0a0a0a]">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-8">
-          
-          {/* Left Tabs */}
-          <div className="lg:w-1/3 flex flex-col gap-3">
-            {tabs.map((tab) => (
-              <button 
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-4 p-5 rounded-xl border text-left transition-all duration-300
-                  ${activeTab === tab.id ? 'bg-orange-500 border-orange-400 shadow-lg' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}
-              >
-                <tab.icon size={24} className={activeTab === tab.id ? 'text-white' : 'text-orange-500'} />
-                <div>
-                  <div className={`font-bold ${activeTab === tab.id ? 'text-white' : 'text-zinc-200'}`}>{tab.title}</div>
-                  <div className={`text-xs ${activeTab === tab.id ? 'text-orange-200' : 'text-zinc-500'}`}>{tab.sub}</div>
-                </div>
-                <ArrowRight size={16} className={`ml-auto ${activeTab === tab.id ? 'text-white' : 'hidden'}`} />
-              </button>
-            ))}
-          </div>
-
-          {/* Right Content Area */}
-          <div className="lg:w-2/3">
-            <AnimatePresence mode="wait">
-              <motion.div 
-                key={activeTab}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                className="bg-[#111] border border-white/10 rounded-2xl p-10 h-full flex flex-col"
-              >
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-16 h-16 bg-orange-500 rounded-xl flex items-center justify-center text-white shadow-lg">
-                    {React.createElement(tabs[activeTab].icon, { size: 32 })}
-                  </div>
-                  <div>
-                    <span className="bg-orange-500/20 text-orange-500 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">{tabs[activeTab].content.tag}</span>
-                    <h3 className="text-3xl font-bold text-white mt-1">{tabs[activeTab].content.title}</h3>
-                  </div>
-                </div>
-
-                <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full w-max mb-8">
-                  <span className="text-2xl font-bold text-orange-500">{tabs[activeTab].content.stat}</span>
-                  <span className="text-sm text-zinc-400">{tabs[activeTab].content.statDesc}</span>
-                </div>
-
-                <p className="text-lg text-zinc-300 mb-10 leading-relaxed">
-                  {tabs[activeTab].content.desc}
-                </p>
-
-                <div className="mt-auto space-y-4">
-                  {tabs[activeTab].content.checks.map((check, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className="w-5 h-5 rounded-full bg-orange-500/20 flex items-center justify-center">
-                        <span className="text-orange-500 text-xs">✓</span>
-                      </div>
-                      <span className="text-zinc-300">{check}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
+                </motion.div>
+              ))}
             </AnimatePresence>
           </div>
+
         </div>
       </div>
     </section>
   );
 };
 
-// --- 4. NUMBERS / METRICS (Image 4) ---
-const NumbersSection = () => {
-  const metrics = [
-    { icon: BarChart3, val: "+1.2M", label: "transações processadas", sub: "Em toda a plataforma", type: "dark" },
-    { icon: DollarSign, val: "+R$10B", label: "em crédito originado", sub: "Volume total acumulado", type: "orange" },
-    { icon: FileText, val: "+450K", label: "contratos sob gestão", sub: "Ativos na plataforma", type: "dark" },
-    { icon: Compass, val: "26", label: "estados de atuação", sub: "Presença nacional", type: "dark" },
-    { icon: Zap, val: "35%", label: "de crescimento", sub: "Ano a ano (YoY)", type: "dark" },
-    { icon: Clock, val: "15 DIAS", label: "tempo médio de repasse", sub: "vs. semanas no mercado", type: "orange" },
-  ];
-
+// --- 4. MULTIBANK HUB (Visualizing Slide 3) ---
+const HubSection = () => {
+  const banks = ['Itaú', 'Bradesco', 'Santander', 'Caixa', 'Inter', 'BRB'];
+  
   return (
-    <section className="py-32 bg-[#050505] border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-16">
-          <div>
-            <div className="text-orange-500 text-sm font-bold tracking-widest uppercase mb-4">Escala & Autoridade</div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
-              Os números de quem<br/><span className="text-orange-500">lidera a categoria</span>
-            </h2>
-          </div>
-          <p className="text-lg text-zinc-400 max-w-md lg:ml-auto">
-            Não existe intermediador com esses números. A Loft é a infraestrutura dominante do crédito imobiliário brasileiro — e os dados provam.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {metrics.map((m, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className={`p-8 rounded-2xl flex flex-col justify-center min-h-[220px] transition-transform hover:-translate-y-2
-                ${m.type === 'orange' ? 'bg-orange-500 text-white shadow-[0_0_40px_rgba(249,115,22,0.3)]' : 'bg-[#111] border border-white/10 text-white'}`}
-            >
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-6 
-                ${m.type === 'orange' ? 'bg-white/20' : 'bg-white/5 text-orange-500 border border-white/5'}`}>
-                <m.icon size={20} />
-              </div>
-              <div className="text-4xl md:text-5xl font-black mb-2 tracking-tight">{m.val}</div>
-              <div className="font-bold mb-1">{m.label}</div>
-              <div className={m.type === 'orange' ? 'text-orange-200 text-sm' : 'text-zinc-500 text-sm'}>{m.sub}</div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- 5. HOW IT WORKS (Image 5) ---
-const TimelineSection = () => {
-  const timeline = [
-    { num: "01", icon: Search, title: "Diagnóstico do empreendimento", desc: "Análise completa do status do empreendimento, documentação existente e potencial de aprovação bancária." },
-    { num: "02", icon: Compass, title: "Estratégia de crédito", desc: "Definição da melhor rota financeira, seleção dos bancos parceiros ideais e estruturação das condições." },
-    { num: "03", icon: FileCheck, title: "Preparação para repasse", desc: "Regularização documental, vistoria das unidades e adequação de todas as exigências bancárias." },
-    { num: "04", icon: Landmark, title: "Aprovação multibanco", desc: "Envio simultâneo a múltiplos bancos, gestão ativa do processo e acompanhamento de cada aprovação." },
-    { num: "05", icon: DollarSign, title: "Caixa na conta mais rápido", desc: "Liquidação do repasse e entrada de caixa para a incorporadora em tempo recorde — média de 15 dias." },
-  ];
-
-  return (
-    <section className="py-32 bg-[#0a0a0a] relative overflow-hidden">
-      <BackgroundGrid />
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+    <section className={`py-32 ${bgDark} relative overflow-hidden border-t border-[#262626]`}>
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div className="text-center mb-20">
-          <div className="text-orange-500 text-sm font-bold tracking-widest uppercase mb-4">Como Funciona</div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">
-            Do diagnóstico ao caixa <span className="text-orange-500">em 5 etapas</span>
-          </h2>
-          <p className="text-lg text-zinc-400 max-w-3xl mx-auto">
-            Um processo estruturado que elimina gargalos e maximiza a velocidade de conversão de VGV em liquidez real.
-          </p>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4">Conectividade Total. <br/>Acesso Simultâneo.</h2>
+          <p className="text-[#a3a3a3] text-lg">Um único input roteado de forma inteligente para todo o sistema financeiro.</p>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-6 relative">
-          <div className="hidden md:block absolute top-[50px] left-10 w-[80%] h-px bg-zinc-800" />
-          
-          {timeline.map((item, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.15 }}
-              viewport={{ once: true }}
-              className="flex-1 flex flex-col items-center md:items-start text-center md:text-left relative z-10"
-            >
-              <div className="w-24 h-24 rounded-full bg-[#111] border border-white/10 flex items-center justify-center relative mb-6 shrink-0 shadow-xl">
-                <item.icon size={32} className="text-orange-500" />
-                <div className="absolute -top-1 -right-1 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg">
-                  {item.num}
-                </div>
+        {/* Visual Hub */}
+        <div className="relative h-[400px] flex items-center justify-center">
+          {/* Center Loft Node */}
+          <div className="absolute z-20 w-32 h-32 bg-gradient-to-br from-[#ff8533] to-[#cc5200] rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(255,102,0,0.5)] border-[4px] border-[#1a1a1a]">
+            <span className="text-white font-black text-3xl tracking-tighter">loft</span>
+          </div>
+
+          {/* Orbiting Banks */}
+          {banks.map((bank, index) => {
+            const angle = (index * 360) / banks.length;
+            const radius = 160; // distance from center
+            const x = Math.cos((angle * Math.PI) / 180) * radius;
+            const y = Math.sin((angle * Math.PI) / 180) * radius;
+
+            return (
+              <React.Fragment key={bank}>
+                {/* Connecting Lines */}
+                <motion.div 
+                  className="absolute z-0 w-full h-[2px] origin-left"
+                  style={{
+                    left: '50%', top: '50%',
+                    width: radius,
+                    transform: `rotate(${angle}deg)`,
+                    background: 'linear-gradient(90deg, #ff6600 0%, transparent 100%)',
+                    opacity: 0.3
+                  }}
+                />
+                <motion.div
+                  className="absolute z-0 w-[4px] h-[4px] bg-[#ff6600] rounded-full shadow-[0_0_10px_#ff6600]"
+                  style={{ left: '50%', top: '50%' }}
+                  animate={{ 
+                    x: [0, Math.cos((angle * Math.PI) / 180) * radius], 
+                    y: [0, Math.sin((angle * Math.PI) / 180) * radius],
+                    opacity: [1, 0]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, delay: index * 0.3, ease: "linear" }}
+                />
+
+                {/* Bank Nodes */}
+                <motion.div
+                  className="absolute z-10 flex flex-col items-center justify-center bg-[#141414] border border-[#262626] rounded-xl w-[100px] h-[50px] shadow-lg"
+                  style={{ 
+                    left: `calc(50% + ${x}px - 50px)`, 
+                    top: `calc(50% + ${y}px - 25px)` 
+                  }}
+                  whileHover={{ scale: 1.1, borderColor: '#ff6600' }}
+                >
+                  <span className="text-white text-xs font-bold">{bank}</span>
+                </motion.div>
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// --- 5. NUMBERS SECTION (Slide 2) ---
+const NumbersSection = () => {
+  const stats = [
+    { val: "1.2M", label: "Transações", sub: "processadas" },
+    { val: "+R$10B", label: "Originação", sub: "de crédito gerado", highlight: true },
+    { val: "+450K", label: "Contratos", sub: "sob gestão" },
+    { val: "26", label: "Estados", sub: "presença nacional" },
+  ];
+
+  return (
+    <section className={`py-24 bg-[#141414] border-t border-b border-[#262626]`}>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-[#262626]">
+          {stats.map((stat, i) => (
+            <div key={i} className="flex flex-col items-center text-center px-4">
+              <div className={`text-4xl md:text-5xl font-black tracking-tighter mb-2 ${stat.highlight ? 'text-[#ff6600]' : 'text-white'}`}>
+                {stat.val}
               </div>
-              <h3 className="text-white font-bold text-lg mb-3">{item.title}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed">{item.desc}</p>
-            </motion.div>
+              <div className="text-[13px] font-bold text-[#e5e5e5] uppercase tracking-widest">{stat.label}</div>
+              <div className="text-[12px] text-[#737373] mt-1">{stat.sub}</div>
+            </div>
           ))}
         </div>
       </div>
@@ -421,49 +400,39 @@ const TimelineSection = () => {
   );
 };
 
-// --- APP WRAPPER & NAVBAR ---
+// --- 6. FINAL CTA ---
+const CTASection = () => (
+  <section className={`py-32 ${bgDark} relative overflow-hidden`}>
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-[#ff6600]/10 via-[#0a0a0a] to-[#0a0a0a]" />
+    <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+      <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-6">
+        Seu empreendimento não pode esperar o crédito andar.
+      </h2>
+      <p className="text-xl text-[#a3a3a3] mb-12 max-w-2xl mx-auto">
+        Transformar VGV em caixa 35% mais rápido protege a margem, reduz o custo de capital e garante o seu lucro planejado.
+      </p>
+      <button className="px-10 py-5 bg-[#ff6600] text-white rounded-xl font-bold text-lg hover:bg-[#e65c00] transition-all shadow-[0_0_30px_rgba(255,102,0,0.3)] flex items-center justify-center gap-2 mx-auto">
+        Agendar diagnóstico gratuito <ArrowUpRight size={20} />
+      </button>
+    </div>
+  </section>
+);
+
+// --- MAIN APP ---
 export default function App() {
   return (
-    <div className="font-sans bg-[#050505] min-h-screen text-zinc-50 selection:bg-orange-500/30">
-      
-      {/* Navbar (Image 2 style) */}
-      <nav className="fixed top-0 w-full z-50 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-white/5 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            {/* Fake Loft Logo */}
-            <div className="text-white font-black text-3xl tracking-tighter flex items-center gap-1">
-               loft <div className="w-1 h-8 bg-white/20 ml-2" />
-            </div>
-            <div className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest leading-tight">
-              Canal<br/>Incorporações
-            </div>
-          </div>
-          
-          <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-zinc-400">
-            <a href="#" className="hover:text-white transition-colors">Infraestrutura</a>
-            <a href="#" className="hover:text-white transition-colors">Ecossistema</a>
-            <a href="#" className="hover:text-white transition-colors">Resultados</a>
-            <a href="#" className="hover:text-white transition-colors">Como Funciona</a>
-            <a href="#" className="hover:text-white transition-colors">Sobre a Loft</a>
-          </div>
-
-          <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2.5 rounded text-sm transition-colors shadow-[0_0_15px_rgba(249,115,22,0.3)]">
-            Falar com especialista
-          </button>
-        </div>
-      </nav>
-
+    <div className="font-sans bg-[#0a0a0a] min-h-screen text-zinc-50 selection:bg-[#ff6600]/30 selection:text-white">
+      <Navbar />
       <main>
         <HeroSection />
-        <ArchitectureSection />
-        <EcosystemSection />
+        <EcosystemTabs />
+        <HubSection />
         <NumbersSection />
-        <TimelineSection />
+        <CTASection />
       </main>
-
-      <footer className="bg-[#050505] py-12 border-t border-white/5 text-center">
-         <div className="text-white font-black text-2xl tracking-tighter mb-4">loft</div>
-         <p className="text-zinc-600 text-sm">© {new Date().getFullYear()} Loft Canal Incorporações. Todos os direitos reservados.</p>
+      <footer className="bg-[#0a0a0a] py-10 border-t border-[#262626] text-center">
+         <div className="text-white font-black text-2xl tracking-tighter mb-2">loft</div>
+         <p className="text-[#737373] text-[13px]">© {new Date().getFullYear()} Loft Canal Incorporações. Infraestrutura de crédito.</p>
       </footer>
     </div>
   );
