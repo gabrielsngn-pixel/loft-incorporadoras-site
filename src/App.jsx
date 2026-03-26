@@ -26,9 +26,6 @@ import {
 const WHATSAPP_URL =
   'https://wa.me/5511999999999?text=Vi%20o%20Canal%20Incorpora%C3%A7%C3%B5es%20da%20Loft%20e%20quero%20entender%20como%20destravar%20o%20caixa%20do%20meu%20empreendimento.';
 
-const LOFT_LOGO =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAAWCAYAAADw9pQkAAACeElEQVR4nO2YzWsTQRSGv9l1i0nTNE2SJEmSJEmSJEmSJElbp4VW2tttS4v9gT7A3h7+AB9A9sLuQW+gk6Q0l0oTbW3a1mZ3JjvZrQW0ppQ0m8k8mZm9vJmJvN7e3vM+8zM7M7Ow8C8BvJ4AF8BrcB2Y5H8lRk5S2rjQWJm6r6m4cAfcD6r2fY4m4Z5Wg7b0PjD4M1P4A1gXlCk3m1m4bW4C3gE0k0b+JbXWq0Gm2Nq7Xy2M6sL3Q6HfD3wLQ4D8m9pJ4H2bY3gI8B3gM0O+QY2VqvV4P5qvV5z8Cq6XQ6M3gF2A3wBvA1QWmWmYF9y6bN3gH3gU8A3Q4Gm6l0Ol0VfQ6nZ2dF2A7QJrM1m80m0+12B0B5k7A3gS2x2O8G9gJ8G7r9fpxiKIoN1ut1tR1XW3B4PB9m2j0aj3W63S8B7gR0A3wD2A4wX+Q0lRFGV3d7dZlmW7u7u9H1fV1VVYRiGZVkWfT4fVVVVj8djn8/n8/l8NBoNQRAEwzDMpmm6u7tLkiS7u7uCwSC2bWtra6OoqAjDMBRFsVqtJpPJ4/H4y+Vy8vl8A8MwyLIs0zQdDofz+XxVVVXF43F8Ph8ul8vBwcG4XC7j8fj29vZ8Pp8wDOPxeLxQKOTxeCwUCnE4HPV6nYODg7S1tTU0NATDMFRVVU2n0zQ0NNDe3k5paSlWq5W2bYNhGPr7+8nlcsRiMfb29qirq0OlUikUCtja2mJ/f59ms1mWZQqFQv7+/vh8PtLpNLa2trC4uIi2bWMYBq1Wq2KxGFtbW1AqlWRZxtraGg6HQ0tLC1tbW2i1WnZ2dtrb28PhcAiCwGQy4fF4iKIIi8XC0NAQ0uk0vV6P5eVlKpUKVVVVfD4fZ2dnk8lk8Pl8mM1mXl5eWF5eptVq8Xg8CgoK8Pl8nE6n6PV6BwcH0Wg0mpqaWF1d5fLyknA4jEajmM1m2tvbWVtbY3JyEo1GQ6FQyGQy2traWFtbY2BgQH9/f7q6upDJZJiYmODs7IxSqeT8/Lyvr4+Pjw9arRY/Pz9kWUZfXx8jIyN8fHxQKBS0Wi1arRaRSIRarcbW1ha5XI7f74fRaCQajUZ7eztWq5WBgQF2dnYwGo3UajX19fWk02l0Oh3Gx8d5eHiQJAmn08nq6ir5fJ6NjQ2ysrKIogiHh4eUlZVhMplQKpV4PB5qtRq1Wo2ZmRkqKysxGo2Mj4/z8fFBfX09mUwGl8uFz+ejr68Pq9VKs9lMJBKRSqVUKhX19fW8vLwQBAHxeJx6vY7P56OgoIDq6mq8Xi9qtZqWlhY0Gg0ul4u6ujo8Hg+RSMT8/DyLxYLBYEAikdDe3s7d3R3xeJydnSUQCDg5OeH6+pqOjg7S6TR2dnYwGo0wDIPRaGR4eJjR0VFGR0f5+PhAr9dTV1eH2+0mHo+Tz+fRarVoNBqRSMTg4CC9Xk9ra2uysrIYGBiQyWQkEgnV1dW0Wi0kSZLFYkGpVKLX6+no6KDVamF7e5vY2FhUV1eTyWQQBAF6vR7xeJxarYbH40GpVBIIBBwOB1tbW1itVnR2dqLRaGRgYICSkhIikYjV1VW6urrY2NhAr9fT1NSEy+XC6/Xi8/mQy+W4XC6m02mWlpZwOp2MjY1hMpnQ6/X4/X7i8TjxeJyOjg4ODg6QJEnR0dHMz8/zy1/+MklSEz0f8BdwA4W6q9o+o0QAAAABJRU5ErkJggg==';
-
 const fadeUp = {
   initial: { opacity: 0, y: 28 },
   whileInView: { opacity: 1, y: 0 },
@@ -280,9 +277,9 @@ const SolutionSection = () => {
         />
 
         <div className="relative mt-14">
-          <div className="absolute left-[6%] right-[6%] top-14 hidden h-px bg-gradient-to-r from-orange-500/0 via-orange-500/45 to-orange-500/0 lg:block" />
+          <div className="absolute left-[8%] right-[8%] top-10 hidden h-px bg-gradient-to-r from-orange-500/0 via-orange-500/40 to-orange-500/0 lg:block" />
 
-          <div className="grid gap-5 lg:grid-cols-5">
+          <div className="grid gap-6 lg:grid-cols-5">
             {steps.map((step, i) => (
               <motion.div
                 key={step.title}
@@ -292,12 +289,12 @@ const SolutionSection = () => {
                 transition={{ duration: 0.55, delay: i * 0.08 }}
                 className="relative"
               >
-                <div className="mb-5 flex justify-center">
+                <div className="mb-4 flex justify-center">
                   <div
-                    className={`flex h-16 w-16 items-center justify-center rounded-2xl border ${
+                    className={`relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border ${
                       step.active
-                        ? 'border-orange-500/40 bg-orange-500 text-black shadow-[0_0_35px_rgba(255,106,0,0.35)]'
-                        : 'border-white/10 bg-white/[0.04]'
+                        ? 'border-orange-500/40 bg-orange-500 text-black shadow-[0_0_30px_rgba(255,106,0,0.35)]'
+                        : 'border-white/10 bg-[#111111]'
                     }`}
                   >
                     {step.icon}
@@ -305,6 +302,66 @@ const SolutionSection = () => {
                 </div>
 
                 {i < steps.length - 1 ? (
+                  <div className="absolute right-[-16px] top-7 hidden lg:block">
+                    <ChevronRight className="text-orange-400/70" size={16} />
+                  </div>
+                ) : null}
+
+                <div
+                  className={`rounded-[28px] border p-6 ${
+                    step.active
+                      ? 'border-orange-500/20 bg-[linear-gradient(180deg,rgba(255,106,0,0.14),rgba(255,106,0,0.04))]'
+                      : 'border-white/10 bg-white/[0.04]'
+                  }`}
+                >
+                  <div className="text-center">
+                    <div className="text-2xl font-black text-white">{step.title}</div>
+                    <div className="mt-1 text-sm font-medium text-zinc-500">{step.subtitle}</div>
+                  </div>
+
+                  <div className="mt-5 rounded-2xl border border-white/10 bg-black/25 p-4">
+                    <div className="space-y-2.5 text-sm leading-6 text-zinc-300">
+                      {step.bullets.map((bullet) => (
+                        <div key={bullet}>{bullet}</div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-4">
+            {[
+              ['35%', 'mais rápido'],
+              ['-3 p.p.', 'custo capital'],
+              ['98%', 'taxa aprovação'],
+              ['7 dias', 'até ganho visível'],
+            ].map(([value, label], i) => (
+              <div
+                key={label}
+                className={`rounded-3xl border p-5 ${
+                  i === 0
+                    ? 'border-orange-500/20 bg-orange-500 text-white'
+                    : 'border-white/10 bg-white/[0.03]'
+                }`}
+              >
+                <div className="text-4xl font-black text-white">{value}</div>
+                <div
+                  className={`mt-1 text-sm uppercase tracking-[0.16em] ${
+                    i === 0 ? 'text-white/80' : 'text-zinc-500'
+                  }`}
+                >
+                  {label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};                {i < steps.length - 1 ? (
                   <div className="absolute right-[-18px] top-8 hidden lg:block">
                     <ChevronRight className="text-orange-400/70" size={18} />
                   </div>
@@ -370,12 +427,12 @@ const SolutionSection = () => {
 
 const BankNetworkSection = () => {
   const banks = [
-    { name: 'Itaú', x: '50%', y: '8%' },
-    { name: 'Bradesco', x: '78%', y: '26%' },
-    { name: 'Santander', x: '78%', y: '66%' },
-    { name: 'Caixa', x: '50%', y: '84%' },
-    { name: 'Inter', x: '22%', y: '66%' },
-    { name: 'BRB', x: '22%', y: '26%' },
+    { name: 'Itaú', left: '50%', top: '8%' },
+    { name: 'Bradesco', left: '78%', top: '28%' },
+    { name: 'Santander', left: '78%', top: '68%' },
+    { name: 'Caixa', left: '50%', top: '88%' },
+    { name: 'Inter', left: '22%', top: '68%' },
+    { name: 'BRB', left: '22%', top: '28%' },
   ];
 
   return (
@@ -384,13 +441,36 @@ const BankNetworkSection = () => {
         <SectionHeader
           eyebrow="Distribuição"
           title="Conectado aos principais bancos do Brasil"
-          description="Não é só integração. É capacidade real de roteamento, competição de taxa e direcionamento por aderência para aumentar aprovação e reduzir custo financeiro."
+          description="Não é só integração. É poder real de distribuição, competição de taxa e roteamento por aderência para aumentar aprovação e reduzir custo financeiro."
         />
 
-        <div className="relative mt-14 overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_center,rgba(255,106,0,0.12),transparent_35%),#0c0c0e] p-8 md:p-12">
-          <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:28px_28px]" />
+        <div className="relative mt-14 overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c0c0e] p-8 md:p-12">
+          <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:28px_28px]" />
 
-          <div className="relative mx-auto h-[520px] max-w-5xl">
+          <div className="relative mx-auto h-[560px] max-w-5xl">
+            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1000 560" fill="none">
+              {[
+                ['500', '280', '500', '70'],
+                ['500', '280', '780', '160'],
+                ['500', '280', '780', '400'],
+                ['500', '280', '500', '490'],
+                ['500', '280', '220', '400'],
+                ['500', '280', '220', '160'],
+              ].map((line, i) => (
+                <motion.path
+                  key={i}
+                  d={`M ${line[0]} ${line[1]} C ${line[0]} ${line[1]}, ${(Number(line[0]) + Number(line[2])) / 2} ${(Number(line[1]) + Number(line[3])) / 2}, ${line[2]} ${line[3]}`}
+                  stroke="rgba(255,106,0,0.52)"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0, opacity: 0.35 }}
+                  whileInView={{ pathLength: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.15, delay: i * 0.07 }}
+                />
+              ))}
+            </svg>
+
             {banks.map((bank, i) => (
               <motion.div
                 key={bank.name}
@@ -399,36 +479,13 @@ const BankNetworkSection = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
                 className="absolute"
-                style={{ left: bank.x, top: bank.y, transform: 'translate(-50%, -50%)' }}
+                style={{ left: bank.left, top: bank.top, transform: 'translate(-50%, -50%)' }}
               >
-                <div className="flex min-w-[150px] items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] px-6 py-5 text-lg font-bold text-white shadow-[0_0_25px_rgba(0,0,0,0.35)]">
+                <div className="flex min-w-[160px] items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] px-6 py-5 text-lg font-bold text-white shadow-[0_0_25px_rgba(0,0,0,0.35)]">
                   {bank.name}
                 </div>
               </motion.div>
             ))}
-
-            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1000 520" fill="none">
-              {[
-                ['500', '260', '500', '72'],
-                ['500', '260', '780', '155'],
-                ['500', '260', '780', '344'],
-                ['500', '260', '500', '447'],
-                ['500', '260', '220', '344'],
-                ['500', '260', '220', '155'],
-              ].map((line, i) => (
-                <motion.path
-                  key={i}
-                  d={`M ${line[0]} ${line[1]} C ${line[0]} ${line[1]}, ${(Number(line[0]) + Number(line[2])) / 2} ${(Number(line[1]) + Number(line[3])) / 2}, ${line[2]} ${line[3]}`}
-                  stroke="rgba(255,106,0,0.55)"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0, opacity: 0.3 }}
-                  whileInView={{ pathLength: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.2, delay: i * 0.08 }}
-                />
-              ))}
-            </svg>
 
             <motion.div
               initial={{ opacity: 0, scale: 0.94 }}
@@ -436,9 +493,9 @@ const BankNetworkSection = () => {
               viewport={{ once: true }}
               className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
             >
-              <div className="flex h-36 w-36 items-center justify-center rounded-full border border-orange-400/40 bg-orange-500 shadow-[0_0_60px_rgba(255,106,0,0.45)]">
+              <div className="flex h-40 w-40 items-center justify-center rounded-full border border-orange-400/40 bg-orange-500 shadow-[0_0_60px_rgba(255,106,0,0.45)]">
                 <div className="text-center">
-                  <div className="text-xl font-black text-black">Loft</div>
+                  <div className="text-2xl font-black text-black">Loft</div>
                   <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-black/70">
                     Multibanco
                   </div>
@@ -447,6 +504,23 @@ const BankNetworkSection = () => {
             </motion.div>
           </div>
 
+          <div className="relative mt-6 grid gap-4 md:grid-cols-3">
+            {[
+              ['Um único cadastro', 'A operação conecta múltiplos bancos sem fricção manual.'],
+              ['Maximização de aprovação', 'Roteamento por aderência e competição real de taxa.'],
+              ['Velocidade operacional', 'Menos dispersão, menos retrabalho e mais caixa convertido.'],
+            ].map(([title, desc]) => (
+              <div key={title} className="rounded-2xl border border-white/10 bg-black/25 p-5">
+                <div className="text-lg font-bold text-white">{title}</div>
+                <div className="mt-2 text-sm leading-6 text-zinc-400">{desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
           <div className="relative mt-4 grid gap-4 md:grid-cols-3">
             {[
               ['Um único cadastro', 'A operação conecta múltiplos bancos sem fricção manual.'],
@@ -871,7 +945,7 @@ const StorySection = () => {
     <section id="historia" className={`${sectionClass} overflow-hidden bg-[#050505]`}>
       <div className="mx-auto max-w-7xl px-6 md:px-8">
         <SectionHeader
-          eyebrow="História"
+          eyebrow="Resultados"
           title="Escala, distribuição e operação para sustentar o canal"
           description="O Canal Incorporações é a frente B2B da Loft dedicada a conectar incorporadoras a uma infraestrutura financeira capaz de acelerar repasse, reduzir custo e aumentar previsibilidade de caixa."
         />
@@ -894,18 +968,47 @@ const StorySection = () => {
           </SurfaceCard>
 
           <div className="space-y-6">
-            <SurfaceCard className="overflow-hidden p-0">
-              <div className="h-[320px] bg-[linear-gradient(135deg,rgba(255,106,0,0.18),rgba(255,255,255,0.02))] p-8">
-                <div className="grid h-full grid-cols-3 gap-4">
-                  <div className="rounded-3xl border border-white/10 bg-black/25" />
-                  <div className="rounded-3xl border border-white/10 bg-black/25" />
-                  <div className="rounded-3xl border border-white/10 bg-black/25" />
-                  <div className="col-span-2 rounded-3xl border border-white/10 bg-black/25" />
-                  <div className="rounded-3xl border border-white/10 bg-orange-500/20" />
+            <SurfaceCard className="p-7">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-3xl border border-white/10 bg-black/25 p-6">
+                  <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">Canal</div>
+                  <div className="mt-3 text-3xl font-black text-white">B2B para incorporadoras</div>
+                  <div className="mt-3 text-sm leading-7 text-zinc-400">
+                    Distribuição, operação e infraestrutura financeira para acelerar repasse e previsibilidade de caixa.
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border border-orange-500/20 bg-orange-500/10 p-6">
+                  <div className="text-xs uppercase tracking-[0.18em] text-orange-300">Tese</div>
+                  <div className="mt-3 text-3xl font-black text-white">Venda só vira valor quando vira caixa</div>
+                  <div className="mt-3 text-sm leading-7 text-zinc-200/80">
+                    O ganho está em comprimir prazo, reduzir atrito e aumentar aprovação antes do gargalo final.
+                  </div>
                 </div>
               </div>
             </SurfaceCard>
 
+            <div className="grid gap-4 md:grid-cols-4">
+              {[
+                ['R$ 7B+', 'valuation'],
+                ['1.2M+', 'transações'],
+                ['35%', 'crescimento'],
+                ['12+', 'bancos parceiros'],
+              ].map(([value, label]) => (
+                <SurfaceCard key={label} className="p-5 text-center">
+                  <div className="text-4xl font-black text-white">{value}</div>
+                  <div className="mt-2 text-xs uppercase tracking-[0.18em] text-zinc-500">
+                    {label}
+                  </div>
+                </SurfaceCard>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
             <div className="grid gap-4 md:grid-cols-4">
               {[
                 ['R$ 7B+', 'valuation'],
@@ -1146,20 +1249,18 @@ export default function App() {
       id="topo"
       className="min-h-screen bg-[#050505] font-sans text-zinc-50 selection:bg-orange-500/30"
     >
-      <nav className="fixed top-0 z-50 w-full border-b border-white/5 bg-black/45 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-8">
-          <div className="flex items-center gap-3">
-            <img src={LOFT_LOGO} alt="Loft" className="h-7 w-auto" />
-            <div className="h-8 w-px bg-white/10" />
-            <div>
-              <div className="text-sm font-black uppercase tracking-[0.18em] text-white">
-                Canal Incorporações
-              </div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
-                Infraestrutura de crédito imobiliário
-              </div>
-            </div>
-          </div>
+<div className="flex items-center gap-3">
+  <div className="text-3xl font-black tracking-tight text-white">loft</div>
+  <div className="h-8 w-px bg-white/10" />
+  <div>
+    <div className="text-sm font-black uppercase tracking-[0.18em] text-white">
+      Canal Incorporações
+    </div>
+    <div className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+      Infraestrutura de crédito imobiliário
+    </div>
+  </div>
+</div>
 
           <div className="hidden items-center gap-8 lg:flex">
             <a href="#esteira" className="text-sm text-zinc-400 transition hover:text-white">
