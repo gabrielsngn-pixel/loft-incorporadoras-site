@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowRight, Landmark, BarChart3, Cpu, MessageCircle,
   FileText, Check, Zap, AlertTriangle, ChevronRight, ChevronLeft,
   ShieldCheck, ArrowUpRight, Activity, Quote, Building2,
   TrendingUp, ChevronDown, DollarSign, Target, Globe,
-  Users, Rocket, Lock, PieChart, Bell, Calculator
+  Users, Rocket, Lock, PieChart, Bell, Calculator, Layers
 } from 'lucide-react';
 
 // ─── TOKENS ──────────────────────────────────────────────────────────────────
