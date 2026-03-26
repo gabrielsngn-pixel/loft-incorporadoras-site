@@ -5,24 +5,29 @@ import {
   BarChart3,
   Building2,
   CheckCircle,
-  CircleDollarSign,
   Clock,
-  Cpu,
   FileText,
   Landmark,
-  LayoutDashboard,
-  MessageCircle,
-  TrendingUp,
-  BadgeCheck,
-  ChevronRight,
+  ShieldCheck,
+  Smartphone,
   Wallet,
   ArrowDownToLine,
-  Plus,
-  Minus,
+  CircleDollarSign,
+  LayoutDashboard,
+  MessageCircle,
+  Cpu,
+  BadgeCheck,
+  ChevronRight,
+  TrendingUp,
+  Building,
+  HelpCircle,
 } from 'lucide-react';
 
 const WHATSAPP_URL =
-  'https://wa.me/5511999999999?text=Vi%20a%20p%C3%A1gina%20do%20Canal%20Incorpora%C3%A7%C3%B5es%20da%20Loft%20e%20quero%20entender%20como%20voc%C3%AAs%20podem%20acelerar%20o%20caixa%20do%20meu%20empreendimento.';
+  'https://wa.me/5511999999999?text=Vi%20o%20Canal%20Incorpora%C3%A7%C3%B5es%20da%20Loft%20e%20quero%20entender%20como%20destravar%20o%20caixa%20do%20meu%20empreendimento.';
+
+const LOFT_LOGO =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAAWCAYAAADw9pQkAAACeElEQVR4nO2YzWsTQRSGv9l1i0nTNE2SJEmSJEmSJEmSJElbp4VW2tttS4v9gT7A3h7+AB9A9sLuQW+gk6Q0l0oTbW3a1mZ3JjvZrQW0ppQ0m8k8mZm9vJmJvN7e3vM+8zM7M7Ow8C8BvJ4AF8BrcB2Y5H8lRk5S2rjQWJm6r6m4cAfcD6r2fY4m4Z5Wg7b0PjD4M1P4A1gXlCk3m1m4bW4C3gE0k0b+JbXWq0Gm2Nq7Xy2M6sL3Q6HfD3wLQ4D8m9pJ4H2bY3gI8B3gM0O+QY2VqvV4P5qvV5z8Cq6XQ6M3gF2A3wBvA1QWmWmYF9y6bN3gH3gU8A3Q4Gm6l0Ol0VfQ6nZ2dF2A7QJrM1m80m0+12B0B5k7A3gS2x2O8G9gJ8G7r9fpxiKIoN1ut1tR1XW3B4PB9m2j0aj3W63S8B7gR0A3wD2A4wX+Q0lRFGV3d7dZlmW7u7u9H1fV1VVYRiGZVkWfT4fVVVVj8djn8/n8/l8NBoNQRAEwzDMpmm6u7tLkiS7u7uCwSC2bWtra6OoqAjDMBRFsVqtJpPJ4/H4y+Vy8vl8A8MwyLIs0zQdDofz+XxVVVXF43F8Ph8ul8vBwcG4XC7j8fj29vZ8Pp8wDOPxeLxQKOTxeCwUCnE4HPV6nYODg7S1tTU0NATDMFRVVU2n0zQ0NNDe3k5paSlWq5W2bYNhGPr7+8nlcsRiMfb29qirq0OlUikUCtja2mJ/f59ms1mWZQqFQv7+/vh8PtLpNLa2trC4uIi2bWMYBq1Wq2KxGFtbW1AqlWRZxtraGg6HQ0tLC1tbW2i1WnZ2dtrb28PhcAiCwGQy4fF4iKIIi8XC0NAQ0uk0vV6P5eVlKpUKVVVVfD4fZ2dnk8lk8Pl8mM1mXl5eWF5eptVq8Xg8CgoK8Pl8nE6n6PV6BwcH0Wg0mpqaWF1d5fLyknA4jEajmM1m2tvbWVtbY3JyEo1GQ6FQyGQy2traWFtbY2BgQH9/f7q6upDJZJiYmODs7IxSqeT8/Lyvr4+Pjw9arRY/Pz9kWUZfXx8jIyN8fHxQKBS0Wi1arRaRSIRarcbW1ha5XI7f74fRaCQajUZ7eztWq5WBgQF2dnYwGo3UajX19fWk02l0Oh3Gx8d5eHiQJAmn08nq6ir5fJ6NjQ2ysrKIogiHh4eUlZVhMplQKpV4PB5qtRq1Wo2ZmRkqKysxGo2Mj4/z8fFBfX09mUwGl8uFz+ejr68Pq9VKs9lMJBKRSqVUKhX19fW8vLwQBAHxeJx6vY7P56OgoIDq6mq8Xi9qtZqWlhY0Gg0ul4u6ujo8Hg+RSMT8/DyLxYLBYEAikdDe3s7d3R3xeJydnSUQCDg5OeH6+pqOjg7S6TR2dnYwGo0wDIPRaGR4eJjR0VFGR0f5+PhAr9dTV1eH2+0mHo+Tz+fRarVoNBqRSMTg4CC9Xk9ra2uysrIYGBiQyWQkEgnV1dW0Wi0kSZLFYkGpVKLX6+no6KDVamF7e5vY2FhUV1eTyWQQBAF6vR7xeJxarYbH40GpVBIIBBwOB1tbW1itVnR2dqLRaGRgYICSkhIikYjV1VW6urrY2NhAr9fT1NSEy+XC6/Xi8/mQy+W4XC6m02mWlpZwOp2MjY1hMpnQ6/X4/X7i8TjxeJyOjg4ODg6QJEnR0dHMz8/zy1/+MklSEz0f8BdwA4W6q9o+o0QAAAABJRU5ErkJggg==';
 
 const fadeUp = {
   initial: { opacity: 0, y: 28 },
@@ -35,33 +40,28 @@ const sectionClass = 'relative py-28 md:py-32 border-t border-white/5';
 
 const SurfaceCard = ({ children, className = '' }) => (
   <motion.div
-    whileHover={{ y: -6, scale: 1.01 }}
+    whileHover={{ y: -5, scale: 1.008 }}
     transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-    className={`relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.35)] ${className}`}
+    className={`relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.35)] ${className}`}
   >
     <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0))]" />
     {children}
   </motion.div>
 );
 
-const Glow = ({ className = '' }) => (
-  <div
-    className={`pointer-events-none absolute rounded-full blur-3xl ${className}`}
-    aria-hidden="true"
-  />
-);
-
 const SectionHeader = ({ eyebrow, title, description, center = true }) => (
   <motion.div
     {...fadeUp}
-    className={`${center ? 'text-center mx-auto' : ''} max-w-4xl mb-14 md:mb-16`}
+    className={`${center ? 'text-center mx-auto' : ''} max-w-5xl mb-14 md:mb-16`}
   >
     {eyebrow ? (
       <span className="mb-5 inline-flex rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-orange-300">
         {eyebrow}
       </span>
     ) : null}
-    <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">{title}</h2>
+    <h2 className="text-4xl font-black leading-[0.95] tracking-tight text-white md:text-6xl">
+      {title}
+    </h2>
     {description ? (
       <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-zinc-400 md:text-xl">
         {description}
@@ -70,36 +70,35 @@ const SectionHeader = ({ eyebrow, title, description, center = true }) => (
   </motion.div>
 );
 
-const MetricBadge = ({ label, value, tone = 'orange', className = '' }) => {
-  const tones = {
-    orange: 'border-orange-500/20 bg-orange-500/10 text-orange-300',
-    green: 'border-emerald-500/20 bg-emerald-500/10 text-emerald-300',
-    white: 'border-white/10 bg-white/[0.04] text-white',
-  };
+const Glow = ({ className = '' }) => (
+  <div className={`pointer-events-none absolute rounded-full blur-3xl ${className}`} />
+);
 
-  return (
-    <div className={`rounded-2xl border px-4 py-3 backdrop-blur-md ${tones[tone]} ${className}`}>
-      <div className="text-[11px] uppercase tracking-[0.18em] opacity-70">{label}</div>
-      <div className="mt-1 text-lg font-bold md:text-xl">{value}</div>
-    </div>
-  );
-};
+const MetricBadge = ({ label, value, className = '' }) => (
+  <div
+    className={`rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 backdrop-blur-md ${className}`}
+  >
+    <div className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">{label}</div>
+    <div className="mt-1 text-lg font-bold text-white md:text-xl">{value}</div>
+  </div>
+);
 
 const HeroSection = () => {
   const { scrollY } = useScroll();
   const bgY = useTransform(scrollY, [0, 800], [0, 140]);
   const fade = useTransform(scrollY, [0, 300], [1, 0.88]);
 
+  const monthly = [26, 34, 38, 52, 61, 74];
+
   return (
     <section className="relative min-h-screen overflow-hidden bg-[#050505] pt-28">
       <motion.div style={{ y: bgY, opacity: fade }} className="absolute inset-0">
         <div className="absolute inset-0 opacity-[0.12] [background-image:linear-gradient(rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:36px_36px]" />
-        <Glow className="left-[-8%] top-24 h-72 w-72 bg-orange-700/20" />
-        <Glow className="right-[4%] top-[22%] h-[26rem] w-[26rem] bg-orange-600/12" />
-        <Glow className="bottom-10 left-[28%] h-64 w-64 bg-orange-500/10" />
+        <Glow className="left-[-6%] top-20 h-72 w-72 bg-orange-700/20" />
+        <Glow className="right-[4%] top-[22%] h-[24rem] w-[24rem] bg-orange-600/10" />
       </motion.div>
 
-      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-14 px-6 pb-20 md:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-14 px-6 pb-20 md:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
         <motion.div
           initial={{ opacity: 0, y: 26 }}
           animate={{ opacity: 1, y: 0 }}
@@ -107,11 +106,12 @@ const HeroSection = () => {
           className="max-w-3xl"
         >
           <span className="inline-flex rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-orange-300">
-            Canal Incorporações · Infraestrutura de Crédito
+            Canal Incorporações · infraestrutura de crédito imobiliário
           </span>
 
-          <h1 className="mt-7 max-w-5xl text-5xl font-black leading-[0.92] tracking-tight text-white md:text-7xl">
-            VGV vendido não é caixa.
+          <h1 className="mt-7 text-5xl font-black leading-[0.93] tracking-tight text-white md:text-7xl">
+            VGV vendido{' '}
+            <span className="text-zinc-500">não é caixa.</span>
             <br />
             <span className="bg-gradient-to-r from-orange-300 via-orange-500 to-orange-600 bg-clip-text text-transparent">
               E isso está custando caro.
@@ -119,9 +119,8 @@ const HeroSection = () => {
           </h1>
 
           <p className="mt-7 max-w-2xl text-lg leading-8 text-zinc-400 md:text-2xl md:leading-9">
-            A Loft conecta venda, documentação, bancos e operação em uma infraestrutura única para
-            reduzir custo financeiro, acelerar repasse e devolver previsibilidade ao caixa do
-            empreendimento.
+            A Loft conecta venda, documentação, bancos e operação até converter capital com mais
+            velocidade, menos risco e mais previsibilidade para a conta da obra.
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -129,11 +128,10 @@ const HeroSection = () => {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-8 py-4 text-lg font-semibold text-white shadow-[0_0_30px_rgba(249,115,22,0.35)] transition hover:bg-orange-600"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-8 py-4 text-lg font-semibold text-white shadow-[0_0_30px_rgba(255,106,0,0.35)] transition hover:bg-orange-600"
             >
               Falar com especialista <ArrowRight size={20} />
             </a>
-
             <a
               href="#esteira"
               className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.04] px-8 py-4 text-lg font-semibold text-white transition hover:bg-white/[0.08]"
@@ -142,11 +140,10 @@ const HeroSection = () => {
             </a>
           </div>
 
-          <div className="mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
-            <MetricBadge label="Velocidade" value="+35%" tone="orange" />
-            <MetricBadge label="Aprovação" value="98%" tone="white" />
-            <MetricBadge label="Custo" value="-3 p.p." tone="white" />
-            <MetricBadge label="Resultado" value="7 dias" tone="white" />
+          <div className="mt-10 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
+            <MetricBadge label="Velocidade" value="35% mais rápido" />
+            <MetricBadge label="Aprovação média" value="98%" />
+            <MetricBadge label="Impacto no custo" value="-3 p.p." />
           </div>
         </motion.div>
 
@@ -160,36 +157,37 @@ const HeroSection = () => {
             <div className="mb-5 flex items-center justify-between">
               <div>
                 <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                  Loft OS · Capital Flow
+                  Loft OS · operação em tempo real
                 </div>
-                <div className="mt-1 text-xl font-bold text-white">Empreendimento Vista Park</div>
+                <div className="mt-1 text-xl font-bold text-white">Empreendimento Horizon Park</div>
               </div>
               <div className="rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-orange-300">
-                Operação ativa
+                Em aceleração
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <MetricBadge label="VGV monitorado" value="R$ 124M" tone="orange" />
-              <MetricBadge label="Aprovação média" value="98%" tone="white" />
-              <MetricBadge label="Prazo médio" value="18 dias" tone="white" />
-              <MetricBadge label="Caixa destravado" value="+R$ 8,4M" tone="orange" />
+              <MetricBadge label="VGV monitorado" value="R$ 124M" />
+              <MetricBadge label="Caixa destravado" value="+R$ 8,4M" />
+              <MetricBadge label="Prazo médio" value="18 dias" />
+              <MetricBadge label="Banco líder" value="Santander" />
             </div>
 
-            <div className="mt-5 grid grid-cols-1 gap-4 xl:grid-cols-[1.15fr_0.85fr]">
-              <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
-                <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                  Evolução de aprovação
+            <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.15fr_0.85fr]">
+              <div className="relative h-44 overflow-hidden rounded-2xl border border-white/10 bg-black/30 p-4">
+                <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:28px_28px]" />
+                <div className="absolute left-4 top-4 text-xs uppercase tracking-[0.18em] text-zinc-500">
+                  Aprovação por ciclo
                 </div>
-                <div className="mt-4 flex h-48 items-end gap-2">
-                  {[36, 42, 48, 58, 69, 78].map((h, i) => (
+                <div className="relative mt-6 flex h-[calc(100%-24px)] items-end gap-2">
+                  {monthly.map((h, i) => (
                     <motion.div
                       key={i}
-                      initial={{ height: 8 }}
-                      whileInView={{ height: `${h}%` }}
+                      initial={{ height: 8, opacity: 0.6 }}
+                      whileInView={{ height: `${h}%`, opacity: 1 }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.85, delay: i * 0.07 }}
-                      className="flex-1 rounded-t-2xl bg-gradient-to-t from-orange-700 to-orange-400 shadow-[0_0_26px_rgba(255,106,0,0.28)]"
+                      transition={{ duration: 0.85, delay: i * 0.06 }}
+                      className="flex-1 rounded-t-xl bg-gradient-to-t from-orange-700 to-orange-400 shadow-[0_0_24px_rgba(255,106,0,0.3)]"
                     />
                   ))}
                 </div>
@@ -197,49 +195,19 @@ const HeroSection = () => {
 
               <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
                 <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                  Fluxo financeiro
+                  Prioridades do dia
                 </div>
-                <div className="mt-4 space-y-4">
+                <div className="mt-4 space-y-3">
                   {[
-                    ['Venda contratada', '100%'],
-                    ['Dossiê estruturado', '86%'],
-                    ['Crédito aprovado', '71%'],
-                    ['Repasse / caixa', '58%'],
-                  ].map(([label, value], i) => (
-                    <div key={label}>
-                      <div className="mb-1 flex items-center justify-between text-xs text-zinc-400">
-                        <span>{label}</span>
-                        <span>{value}</span>
-                      </div>
-                      <div className="h-2.5 rounded-full bg-white/5">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: value }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.85, delay: i * 0.07 }}
-                          className="h-2.5 rounded-full bg-gradient-to-r from-orange-600 to-orange-400"
-                        />
-                      </div>
+                    'Banco alternativo sugerido para unidade 214',
+                    'Pasta documental concluída para 18 clientes',
+                    'Fila pré-habite-se priorizada',
+                  ].map((text) => (
+                    <div key={text} className="flex items-start gap-3">
+                      <CheckCircle size={16} className="mt-0.5 text-orange-300" />
+                      <span className="text-sm leading-6 text-zinc-300">{text}</span>
                     </div>
                   ))}
-                </div>
-
-                <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                  <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                    Eventos recentes
-                  </div>
-                  <div className="mt-3 space-y-3">
-                    {[
-                      'Banco alternativo sugerido para unidade 214',
-                      'Pasta documental concluída para 18 clientes',
-                      'Fila de repasse acelerada no pré-habite-se',
-                    ].map((text) => (
-                      <div key={text} className="flex items-start gap-3">
-                        <CheckCircle size={16} className="mt-0.5 text-orange-400" />
-                        <span className="text-sm leading-6 text-zinc-300">{text}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
             </div>
@@ -252,7 +220,7 @@ const HeroSection = () => {
           >
             <div className="flex items-center gap-2 text-sm text-white">
               <div className="h-2.5 w-2.5 rounded-full bg-orange-400 shadow-[0_0_18px_rgba(255,106,0,0.9)]" />
-              Capital travado custa caro. Fluxo devolve caixa.
+              O problema não é vender. É transformar venda em caixa.
             </div>
           </motion.div>
         </motion.div>
@@ -308,7 +276,7 @@ const SolutionSection = () => {
               <span className="text-orange-400">É infraestrutura.</span>
             </>
           }
-          description="Um sistema operacional que conecta venda, documentação, bancos e caixa em uma jornada contínua — eliminando gargalos entre contrato e repasse."
+          description="Um sistema operacional que conecta venda, documentação, bancos e caixa — eliminando gargalos entre contrato e repasse."
         />
 
         <div className="relative mt-14">
@@ -328,7 +296,7 @@ const SolutionSection = () => {
                   <div
                     className={`flex h-16 w-16 items-center justify-center rounded-2xl border ${
                       step.active
-                        ? 'border-orange-500/40 bg-orange-500 text-black shadow-[0_0_35px_rgba(249,115,22,0.35)]'
+                        ? 'border-orange-500/40 bg-orange-500 text-black shadow-[0_0_35px_rgba(255,106,0,0.35)]'
                         : 'border-white/10 bg-white/[0.04]'
                     }`}
                   >
@@ -369,7 +337,7 @@ const SolutionSection = () => {
               ['35%', 'mais rápido'],
               ['-3 p.p.', 'custo capital'],
               ['98%', 'taxa aprovação'],
-              ['7 dias', 'ganho visível'],
+              ['7 dias', 'até ganho visível'],
             ].map(([value, label], i) => (
               <motion.div
                 key={label}
@@ -416,7 +384,7 @@ const BankNetworkSection = () => {
         <SectionHeader
           eyebrow="Distribuição"
           title="Conectado aos principais bancos do Brasil"
-          description="Não é só integração. É capacidade real de roteamento, competição de taxa e direcionamento por aderência para aumentar aprovação e reduzir custo."
+          description="Não é só integração. É capacidade real de roteamento, competição de taxa e direcionamento por aderência para aumentar aprovação e reduzir custo financeiro."
         />
 
         <div className="relative mt-14 overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_center,rgba(255,106,0,0.12),transparent_35%),#0c0c0e] p-8 md:p-12">
@@ -510,7 +478,7 @@ const ValueDriversSection = () => {
       stat: '98%',
       statLabel: 'aprovação média',
       description:
-        'Um único cadastro conecta sua operação aos grandes bancos simultaneamente. Mais competição de taxas, maior aprovação e velocidade que nenhum banco isolado entrega.',
+        'Um único cadastro conecta sua operação aos grandes bancos simultaneamente. Mais competição de taxas, maior aprovação e velocidade que nenhum banco isolado consegue oferecer.',
       bullets: [
         'Um único cadastro',
         'Conexão com múltiplas instituições',
@@ -711,7 +679,7 @@ const DashboardSection = () => {
         <SectionHeader
           eyebrow="Controle"
           title="Controle absoluto da operação em tempo real"
-          description='Um cockpit para acompanhar taxa de aprovação, pipeline, tempo, gargalos e impacto de caixa sem depender de leitura manual do processo.'
+          description="Um cockpit para acompanhar taxa de aprovação, pipeline, tempo, gargalos e impacto de caixa sem depender de leitura manual do processo."
         />
 
         <motion.div
@@ -744,7 +712,9 @@ const DashboardSection = () => {
                     transition={{ delay: i * 0.06 }}
                     className="rounded-2xl border border-white/10 bg-white/[0.03] p-4"
                   >
-                    <div className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">{label}</div>
+                    <div className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
+                      {label}
+                    </div>
                     <div className="mt-2 text-3xl font-black text-white">{value}</div>
                   </motion.div>
                 ))}
@@ -807,7 +777,8 @@ const DashboardSection = () => {
                   </div>
 
                   <div className="mt-6 rounded-2xl border border-orange-500/20 bg-orange-500/10 p-4 text-sm leading-6 text-orange-100">
-                    Melhor momento da operação: agir antes do repasse. É onde a plataforma comprime prazo e devolve previsibilidade ao caixa.
+                    Melhor momento da operação: agir antes do repasse. É onde a plataforma comprime
+                    prazo e devolve previsibilidade ao caixa.
                   </div>
                 </div>
               </div>
@@ -845,7 +816,9 @@ const DashboardSection = () => {
                             <div className="mt-1 text-sm leading-6 text-zinc-400">{desc}</div>
                           </div>
                         </div>
-                        <div className="text-xs uppercase tracking-[0.16em] text-zinc-500">{time}</div>
+                        <div className="text-xs uppercase tracking-[0.16em] text-zinc-500">
+                          {time}
+                        </div>
                       </div>
                     </motion.div>
                   ))}
@@ -874,7 +847,8 @@ const DashboardSection = () => {
                 </div>
 
                 <div className="mt-5 rounded-2xl border border-white/10 bg-black/25 p-4 text-sm leading-6 text-zinc-300">
-                  O ganho não vem só da aprovação. Vem da compressão do ciclo entre venda e caixa, reduzindo o capital parado na conta da obra.
+                  O ganho não vem só da aprovação. Vem da compressão do ciclo entre venda e caixa,
+                  reduzindo o capital parado na conta da obra.
                 </div>
               </div>
             </div>
@@ -959,15 +933,17 @@ const TimelineSection = () => {
     <section className={`${sectionClass} bg-[#080808]`}>
       <div className="mx-auto max-w-6xl px-6 md:px-8">
         <SectionHeader
-          eyebrow="Resultado"
+          eyebrow="Bottom line"
           title="Mais caixa, menos risco, mais velocidade"
-          description="A lógica não é só aprovar mais. É encurtar ciclo, reduzir atrito e transformar VGV em caixa com mais previsibilidade."
+          description="O ganho aparece quando o crédito deixa de ser uma caixa-preta e passa a ser uma camada de infraestrutura da operação."
         />
 
         <div className="grid gap-6 lg:grid-cols-2">
           <SurfaceCard className="p-7">
-            <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">Modelo tradicional</div>
-            <div className="mt-5 space-y-4">
+            <div className="mb-5 text-xs uppercase tracking-[0.18em] text-zinc-500">
+              Antes
+            </div>
+            <div className="space-y-4">
               {[
                 ['Prazo até repasse', '45+ dias'],
                 ['Previsibilidade de aprovação', 'Baixa'],
@@ -985,10 +961,10 @@ const TimelineSection = () => {
           </SurfaceCard>
 
           <SurfaceCard className="p-7">
-            <div className="text-xs uppercase tracking-[0.18em] text-orange-300">
-              Infraestrutura Loft
+            <div className="mb-5 text-xs uppercase tracking-[0.18em] text-orange-300">
+              Depois
             </div>
-            <div className="mt-5 space-y-4">
+            <div className="space-y-4">
               {[
                 ['Prazo até repasse', '18 dias'],
                 ['Previsibilidade de aprovação', 'Alta'],
@@ -1010,78 +986,47 @@ const TimelineSection = () => {
           </SurfaceCard>
         </div>
 
-        <div className="mt-8 rounded-[2rem] border border-white/10 bg-[#0d0d0f] p-6 md:p-8">
-          <div className="grid gap-4 md:grid-cols-4">
-            {[
-              ['35%', 'aceleração do ciclo financeiro'],
-              ['98%', 'aumento de aprovação'],
-              ['-3 p.p.', 'redução do custo financeiro'],
-              ['Menos esforço', 'operação assistida no funil'],
-            ].map(([title, subtitle], i) => (
-              <motion.div
-                key={title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="rounded-3xl border border-white/10 bg-white/[0.03] p-5"
-              >
-                <div className="text-2xl font-black text-white">{title}</div>
-                <div className="mt-2 text-sm leading-6 text-zinc-400">{subtitle}</div>
-              </motion.div>
-            ))}
-          </div>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {[
+            ['Aceleração do ciclo financeiro', 'Menos tempo entre contrato e caixa.'],
+            ['Aumento de aprovação', 'Distribuição bancária com mais aderência.'],
+            ['Redução de esforço operacional', 'Menos retrabalho, mais previsibilidade.'],
+          ].map(([title, subtitle], i) => (
+            <motion.div
+              key={title}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className="rounded-3xl border border-white/10 bg-[#0d0d0f] p-5"
+            >
+              <div className="text-2xl font-black text-white">{title}</div>
+              <div className="mt-2 text-sm leading-6 text-zinc-400">{subtitle}</div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
   );
 };
 
-const FAQItem = ({ question, answer, open, onClick }) => {
-  return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.03]">
-      <button
-        onClick={onClick}
-        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
-      >
-        <span className="text-lg font-bold text-white">{question}</span>
-        <span className="text-orange-400">{open ? <Minus size={20} /> : <Plus size={20} />}</span>
-      </button>
-
-      <motion.div
-        initial={false}
-        animate={{
-          height: open ? 'auto' : 0,
-          opacity: open ? 1 : 0,
-        }}
-        transition={{ duration: 0.25 }}
-        className="overflow-hidden"
-      >
-        <div className="px-6 pb-6 text-base leading-7 text-zinc-400">{answer}</div>
-      </motion.div>
-    </div>
-  );
-};
-
 const FAQSection = () => {
-  const [openIndex, setOpenIndex] = useState(0);
-
   const faqs = [
     {
       q: 'Quanto custa?',
-      a: 'O modelo varia conforme escopo operacional, volume e desenho da operação. O ponto principal é que a conversa não é sobre custo isolado, e sim sobre retorno: menos capital parado, menor atrito operacional e mais previsibilidade de caixa.',
+      a: 'A estrutura pode variar conforme estágio do empreendimento, volume e escopo operacional. O desenho considera o potencial de aceleração, ganho de aprovação e redução do custo financeiro.',
     },
     {
       q: 'Funciona com qual banco?',
-      a: 'A operação é estruturada para trabalhar com múltiplas instituições e direcionar cada fluxo por aderência. O objetivo não é depender de um único banco, e sim maximizar aprovação e competitividade de taxa.',
+      a: 'A operação é multibanco e orientada por aderência. A lógica não é empurrar um único banco, mas direcionar cada caso para a alternativa com maior probabilidade e melhor resultado financeiro.',
     },
     {
       q: 'Em quanto tempo vejo resultado?',
-      a: 'Depende do estágio do empreendimento e da maturidade da operação atual, mas os primeiros ganhos normalmente aparecem rápido na organização do fluxo, na visibilidade das pendências e na velocidade de avanço da esteira.',
+      a: 'Os primeiros ganhos costumam aparecer rapidamente na organização documental, previsibilidade de pipeline e velocidade de resposta. O impacto financeiro cresce conforme a operação entra mais cedo na esteira.',
     },
     {
-      q: 'Isso substitui minha operação interna?',
-      a: 'Não necessariamente. A Loft pode complementar, estruturar ou acelerar a operação já existente, reduzindo gargalos entre comercial, documentação, crédito, banco e repasse.',
+      q: 'Isso substitui meu time?',
+      a: 'Não. A proposta é reduzir atrito, retrabalho e gargalos operacionais, dando ao time comercial e de crédito uma infraestrutura mais forte para converter venda em caixa.',
     },
   ];
 
@@ -1090,19 +1035,31 @@ const FAQSection = () => {
       <div className="mx-auto max-w-5xl px-6 md:px-8">
         <SectionHeader
           eyebrow="FAQ"
-          title="Objeções comuns, respostas diretas"
-          description="A decisão costuma travar nas mesmas perguntas. Melhor tratá-las com clareza."
+          title="Objeções comuns, respondidas de forma direta"
+          description="O objetivo aqui é simples: mostrar por que a operação vale ser discutida agora, e não no fim do ciclo."
         />
 
         <div className="space-y-4">
           {faqs.map((faq, i) => (
-            <FAQItem
+            <motion.div
               key={faq.q}
-              question={faq.q}
-              answer={faq.a}
-              open={openIndex === i}
-              onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
-            />
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.06 }}
+            >
+              <SurfaceCard className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="mt-1 flex h-10 w-10 items-center justify-center rounded-2xl bg-orange-500/10 text-orange-300">
+                    <HelpCircle size={18} />
+                  </div>
+                  <div>
+                    <div className="text-xl font-bold text-white">{faq.q}</div>
+                    <div className="mt-3 text-base leading-7 text-zinc-400">{faq.a}</div>
+                  </div>
+                </div>
+              </SurfaceCard>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -1114,4 +1071,134 @@ const SocialProofSection = () => {
   const stats = [
     ['1.2M+', 'Transações processadas'],
     ['+R$ 10B', 'Originação de crédito'],
-    ['+450 mil',
+    ['+450 mil', 'Contratos sob gestão'],
+    ['35%', 'Mais ágil na aprovação'],
+  ];
+
+  return (
+    <section className="border-y border-white/5 bg-[#050505] py-16">
+      <div className="mx-auto max-w-7xl px-6 md:px-8">
+        <div className="grid gap-6 md:grid-cols-4">
+          {stats.map(([value, label], i) => (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className="text-center"
+            >
+              <div className="text-4xl font-black tracking-tight text-orange-400 md:text-5xl">
+                {value}
+              </div>
+              <div className="mt-3 text-[11px] uppercase tracking-[0.22em] text-zinc-500 md:text-xs">
+                {label}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const CTASection = () => {
+  return (
+    <section className="relative overflow-hidden bg-[#080808] py-28">
+      <Glow className="left-[15%] top-8 h-72 w-72 bg-orange-700/15" />
+      <Glow className="right-[10%] bottom-0 h-72 w-72 bg-orange-500/10" />
+
+      <div className="relative z-10 mx-auto max-w-5xl px-6 text-center md:px-8">
+        <motion.div {...fadeUp}>
+          <h2 className="text-4xl font-black tracking-tight text-white md:text-6xl">
+            Destrave o caixa do seu empreendimento
+          </h2>
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-zinc-400 md:text-2xl">
+            Se a operação entrar cedo, a conversão acontece com menos atrito, mais previsibilidade e
+            melhor proteção de caixa.
+          </p>
+
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-9 py-4 text-lg font-semibold text-white shadow-[0_0_30px_rgba(255,106,0,0.35)] transition hover:bg-orange-600"
+            >
+              Falar com especialista <ArrowRight size={20} />
+            </a>
+            <a
+              href="#dashboard"
+              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.04] px-9 py-4 text-lg font-semibold text-white transition hover:bg-white/[0.08]"
+            >
+              Ver cockpit da operação
+            </a>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default function App() {
+  return (
+    <div
+      id="topo"
+      className="min-h-screen bg-[#050505] font-sans text-zinc-50 selection:bg-orange-500/30"
+    >
+      <nav className="fixed top-0 z-50 w-full border-b border-white/5 bg-black/45 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-8">
+          <div className="flex items-center gap-3">
+            <img src={LOFT_LOGO} alt="Loft" className="h-7 w-auto" />
+            <div className="h-8 w-px bg-white/10" />
+            <div>
+              <div className="text-sm font-black uppercase tracking-[0.18em] text-white">
+                Canal Incorporações
+              </div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                Infraestrutura de crédito imobiliário
+              </div>
+            </div>
+          </div>
+
+          <div className="hidden items-center gap-8 lg:flex">
+            <a href="#esteira" className="text-sm text-zinc-400 transition hover:text-white">
+              Infraestrutura
+            </a>
+            <a href="#dashboard" className="text-sm text-zinc-400 transition hover:text-white">
+              Ecossistema
+            </a>
+            <a href="#historia" className="text-sm text-zinc-400 transition hover:text-white">
+              Resultados
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-orange-600"
+            >
+              Falar com especialista
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <main>
+        <HeroSection />
+        <SolutionSection />
+        <BankNetworkSection />
+        <ValueDriversSection />
+        <DashboardSection />
+        <StorySection />
+        <TimelineSection />
+        <SocialProofSection />
+        <FAQSection />
+        <CTASection />
+      </main>
+
+      <footer className="border-t border-white/5 bg-[#050505] py-8 text-center text-sm text-zinc-600">
+        © {new Date().getFullYear()} Loft · Canal Incorporações
+      </footer>
+    </div>
+  );
+}
