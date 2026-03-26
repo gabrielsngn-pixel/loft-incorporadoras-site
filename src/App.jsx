@@ -46,41 +46,6 @@ const LoftLogo = ({ size = 90 }) => (
   />
 );
 
-    {/* Wordmark: "loft" lowercase, bold serif-ish weight matching brand */}
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 0, lineHeight: 1 }}>
-      <span style={{
-        fontFamily: "'Georgia', 'Times New Roman', serif",
-        fontWeight: 700,
-        fontStyle: 'italic',
-        fontSize: size * 0.82,
-        color: '#ffffff',
-        letterSpacing: '-0.02em',
-        lineHeight: 1,
-      }}>
-        loft
-      </span>
-      {showTagline && (
-        <>
-          <div style={{ width: 1, height: 0 }} />
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 2 }}>
-            <div style={{ width: 1, height: 22, background: '#333' }} />
-            <span style={{
-              fontSize: 8.5,
-              color: C.t2,
-              fontWeight: 700,
-              letterSpacing: '0.13em',
-              textTransform: 'uppercase',
-              lineHeight: 1.4,
-              fontFamily: 'sans-serif',
-            }}>
-              CANAL<br />INCORPORAÇÕES
-            </span>
-          </div>
-        </>
-      )}
-    </div>
-  </div>
-);
 
 // ─── SHARED COMPONENTS ────────────────────────────────────────────────────────
 const Tag = ({ children, s = {} }) => (
