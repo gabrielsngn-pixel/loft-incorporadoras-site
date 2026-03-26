@@ -766,112 +766,220 @@ const ScaleSection = () => {
   );
 };
 
-// ─── 5. RAZÕES PARA PARCERIA — HEX ───────────────────────────────────────────
+// ─── 5. RAZÕES PARA PARCERIA — HORIZONTAL FLOW ───────────────────────────────
 const PartnershipSection = () => {
-  const reasons = [
-    { icon: Landmark, title: 'Plataforma Multibanco', desc: 'Acesso a todos os grandes bancos em um único cadastro.' },
-    { icon: Cpu, title: 'IA de Ponta', desc: 'Extração e validação automática de documentos.' },
-    { icon: Rocket, title: 'Velocidade Extrema', desc: 'Esteira 35% mais ágil que o mercado.' },
-    { icon: Users, title: 'Especialistas Dedicados', desc: 'Time próprio para reversão de crédito negado.' },
-    { icon: DollarSign, title: 'Custo Zero', desc: 'Infraestrutura completa sem taxas ou setup.' },
+  const [activeIdx, setActiveIdx] = useState(null);
+
+  const nodes = [
+    {
+      icon: Landmark,
+      label: 'Plataforma\nMultibanco',
+      isLoft: false,
+      details: ['Um único cadastro', 'Acesso simultâneo a todos os grandes bancos', 'Motor de roteamento inteligente por perfil'],
+    },
+    {
+      icon: FileText,
+      label: 'Documentação\nAutomatizada',
+      isLoft: false,
+      details: ['AI Force + Loft Check', 'Leitura de +10 tipos de documentos', 'Dossiê automático sem retrabalho'],
+    },
+    {
+      icon: Cpu,
+      label: 'Loft OS',
+      isLoft: true,
+      details: ['Motor multibanco', 'Roteamento inteligente', 'Score otimizado por perfil'],
+    },
+    {
+      icon: Landmark,
+      label: 'Bancos\nParceiros',
+      isLoft: false,
+      details: ['6+ instituições conectadas', 'Competição de taxas em tempo real', 'Aprovação média de 98%'],
+    },
+    {
+      icon: DollarSign,
+      label: 'Caixa\nRealizado',
+      isLoft: false,
+      details: ['Liberação em 15 dias', '−3 p.p. no custo financeiro', 'VGV convertido em resultado'],
+    },
   ];
 
   return (
     <section id="parceria" style={{ padding: '120px 40px', background: C.s1, borderTop: `1px solid ${C.border}`, position: 'relative', overflow: 'hidden' }}>
-      <Glow style={{ width: 600, height: 400, top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
+      <Glow style={{ width: 700, height: 300, top: '30%', left: '50%', transform: 'translateX(-50%)' }} />
       <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 10 }}>
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: 'center', marginBottom: 72 }}>
+
+        {/* Header */}
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          style={{ textAlign: 'center', marginBottom: 80 }}>
           <Tag style={{ marginBottom: 16 }}>Razões para parceria</Tag>
           <h2 style={{ fontSize: 52, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-1.5px', ...S.serif }}>
             Por que fechar com a Loft
           </h2>
           <p style={{ fontSize: 16, color: C.t2, marginTop: 14, maxWidth: 480, margin: '14px auto 0', lineHeight: 1.75 }}>
-            Velocidade e previsibilidade como diferenciais competitivos. Giro de capital acelerado e redução do risco de distrato.
+            Velocidade e previsibilidade como diferenciais competitivos.<br />
+            Giro de capital acelerado e redução do risco de distrato.
           </p>
         </motion.div>
 
-        {/* Central hub + hexagons layout */}
-        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 480 }}>
+        {/* ── HORIZONTAL FLOW ── */}
+        <div style={{ position: 'relative' }}>
 
-          {/* Center */}
-          <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-            style={{ position: 'absolute', zIndex: 20, width: 120, height: 120, background: `radial-gradient(circle at 40% 35%, ${C.orangeL}, ${C.orange})`, borderRadius: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', boxShadow: `0 0 0 20px ${C.orangeDim}, 0 0 0 40px rgba(255,102,0,0.04), 0 0 80px ${C.orangeGlow}` }}>
-            <span style={{ fontSize: 24, fontWeight: 900, color: '#fff', ...S.serif, letterSpacing: '-0.5px' }}>loft</span>
-            <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.7)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>Canal</span>
-          </motion.div>
+          {/* Connector line behind everything */}
+          <div style={{
+            position: 'absolute', top: 36, left: '10%', right: '10%', height: 2,
+            background: `linear-gradient(90deg, ${C.border}, ${C.orange} 40%, ${C.orange} 60%, ${C.border})`,
+            zIndex: 0,
+          }} />
 
-          {/* Reason cards radially placed */}
-          {reasons.map((r, i) => {
-            const angle = (i * 360) / reasons.length - 90;
-            const rad = (angle * Math.PI) / 180;
-            const radius = 200;
-            const x = Math.cos(rad) * radius;
-            const y = Math.sin(rad) * radius;
-            const Icon = r.icon;
-
-            return (
-              <React.Fragment key={i}>
-                {/* Line */}
-                <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', overflow: 'visible' }}>
-                  <line x1="50%" y1="50%" x2={`calc(50% + ${x}px)`} y2={`calc(50% + ${y}px)`}
-                    stroke="rgba(255,102,0,0.12)" strokeWidth="1" strokeDasharray="4 8" />
-                </svg>
-
+          {/* Nodes row */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 0, position: 'relative', zIndex: 1 }}>
+            {nodes.map((node, i) => {
+              const Icon = node.icon;
+              const isActive = activeIdx === i;
+              return (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 + 0.2 }}
-                  style={{
-                    position: 'absolute',
-                    left: `calc(50% + ${x}px)`, top: `calc(50% + ${y}px)`,
-                    transform: 'translate(-50%, -50%)',
-                    width: 170, zIndex: 10
-                  }}
+                  transition={{ delay: i * 0.1 }}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}
                 >
-                  {/* Hexagon-inspired card */}
-                  <div style={{
-                    background: C.s2, border: `1px solid ${C.border}`,
-                    borderRadius: 16, padding: '18px 16px',
-                    display: 'flex', flexDirection: 'column', alignItems: 'center',
-                    gap: 10, textAlign: 'center',
-                    transition: 'border-color 0.2s, box-shadow 0.2s',
-                    cursor: 'default'
-                  }}
-                    onMouseEnter={e => {
-                      e.currentTarget.style.borderColor = C.orangeBorder;
-                      e.currentTarget.style.boxShadow = `0 8px 30px ${C.orangeGlow}`;
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.borderColor = C.border;
-                      e.currentTarget.style.boxShadow = 'none';
+                  {/* Icon node */}
+                  <motion.div
+                    onClick={() => setActiveIdx(isActive ? null : i)}
+                    whileHover={{ scale: 1.06 }}
+                    whileTap={{ scale: 0.96 }}
+                    style={{
+                      width: 72, height: 72, borderRadius: 20, cursor: 'pointer',
+                      background: node.isLoft
+                        ? C.orange
+                        : isActive ? C.s2 : C.s2,
+                      border: `1px solid ${node.isLoft ? C.orange : isActive ? C.orange : C.borderB}`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      boxShadow: node.isLoft
+                        ? `0 0 0 6px ${C.orangeDim}, 0 0 32px ${C.orangeGlow}`
+                        : isActive ? `0 0 0 4px ${C.orangeDim}` : 'none',
+                      transition: 'all 0.25s ease',
+                      position: 'relative',
                     }}
                   >
-                    <div style={{ width: 44, height: 44, borderRadius: 12, background: C.orangeDim, border: `1px solid ${C.orangeBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Icon size={22} color={C.orange} strokeWidth={1.5} />
-                    </div>
-                    <div style={{ fontSize: 13, fontWeight: 800, color: '#fff', lineHeight: 1.3 }}>{r.title}</div>
-                    <div style={{ fontSize: 11, color: C.t2, lineHeight: 1.5 }}>{r.desc}</div>
+                    <Icon size={28} color={node.isLoft ? '#fff' : isActive ? C.orange : C.t2} strokeWidth={1.5} />
+                    {/* active dot indicator */}
+                    {isActive && !node.isLoft && (
+                      <div style={{
+                        position: 'absolute', top: -4, right: -4,
+                        width: 10, height: 10, borderRadius: '50%',
+                        background: C.orange, border: `2px solid ${C.s1}`,
+                      }} />
+                    )}
+                  </motion.div>
+
+                  {/* Vertical stem down to label */}
+                  <div style={{ width: 2, height: 20, background: node.isLoft ? C.orange : C.borderB }} />
+
+                  {/* Label */}
+                  <div style={{
+                    textAlign: 'center', padding: '10px 8px',
+                    background: node.isLoft ? C.orangeDim : 'transparent',
+                    border: node.isLoft ? `1px solid ${C.orangeBorder}` : '1px solid transparent',
+                    borderRadius: 10,
+                  }}>
+                    {node.label.split('\n').map((line, li) => (
+                      <div key={li} style={{
+                        fontSize: 12, fontWeight: node.isLoft ? 800 : 700,
+                        color: node.isLoft ? C.orange : isActive ? '#fff' : C.t2,
+                        letterSpacing: '0.01em', lineHeight: 1.4,
+                        transition: 'color 0.2s',
+                      }}>{line}</div>
+                    ))}
                   </div>
                 </motion.div>
-              </React.Fragment>
-            );
-          })}
+              );
+            })}
+          </div>
+
+          {/* Detail cards row — shown below active node */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 0, marginTop: 16 }}>
+            {nodes.map((node, i) => (
+              <div key={i} style={{ padding: '0 8px' }}>
+                <AnimatePresence>
+                  {activeIdx === i && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scaleY: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                      exit={{ opacity: 0, y: -8, scaleY: 0.9 }}
+                      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                      style={{
+                        background: node.isLoft ? 'rgba(255,102,0,0.08)' : C.s2,
+                        border: `1px solid ${node.isLoft ? C.orangeBorder : C.borderB}`,
+                        borderRadius: 14, padding: '18px 16px',
+                        display: 'flex', flexDirection: 'column', gap: 10,
+                        transformOrigin: 'top center',
+                      }}
+                    >
+                      {node.details.map((d, di) => (
+                        <div key={di} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                          <div style={{
+                            width: 18, height: 18, borderRadius: '50%', flexShrink: 0, marginTop: 1,
+                            background: node.isLoft ? 'rgba(255,255,255,0.15)' : C.orangeDim,
+                            border: `1px solid ${node.isLoft ? 'rgba(255,255,255,0.2)' : C.orangeBorder}`,
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          }}>
+                            <Check size={9} strokeWidth={3} color={node.isLoft ? '#fff' : C.orange} />
+                          </div>
+                          <span style={{ fontSize: 12, color: node.isLoft ? 'rgba(255,255,255,0.85)' : C.t1, lineHeight: 1.55 }}>{d}</span>
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+
+          {/* Hint if nothing selected */}
+          {activeIdx === null && (
+            <motion.p
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              style={{ textAlign: 'center', fontSize: 13, color: C.t3, marginTop: 28, letterSpacing: '0.02em' }}
+            >
+              Clique em qualquer etapa para ver os detalhes
+            </motion.p>
+          )}
         </div>
 
-        {/* Bottom strip */}
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}
-          style={{ marginTop: 60, display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+        {/* ── BOTTOM METRICS STRIP ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ delay: 0.3 }}
+          style={{ marginTop: 72, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}
+        >
           {[
-            { icon: TrendingUp, title: 'Velocidade e previsibilidade', desc: 'Esteira 35% mais ágil e maior taxa de aprovação do mercado.' },
-            { icon: DollarSign, title: 'Giro de capital acelerado', desc: 'Redução do custo financeiro da obra. Lucro planejado = lucro realizado.' },
-            { icon: ShieldCheck, title: 'Redução de distrato', desc: 'Aprovação rápida reduz o tempo de exposição ao risco de desistência.' },
+            { icon: TrendingUp, metric: '35%', metricLabel: 'mais ágil', title: 'Velocidade e previsibilidade', desc: 'Esteira 35% mais rápida que o mercado e maior taxa de aprovação.' },
+            { icon: DollarSign, metric: '−3 p.p.', metricLabel: 'no custo', title: 'Giro de capital acelerado', desc: 'Redução do custo financeiro da obra. Lucro planejado = lucro realizado.' },
+            { icon: ShieldCheck, metric: '98%', metricLabel: 'aprovação', title: 'Menor risco de distrato', desc: 'Aprovação rápida reduz a janela de exposição ao risco de desistência.' },
           ].map((item, i) => (
-            <div key={i} style={{ display: 'flex', gap: 14, padding: '22px 20px', background: C.s2, border: `1px solid ${C.border}`, borderRadius: 14 }}>
-              <item.icon size={20} color={C.orange} strokeWidth={1.5} style={{ flexShrink: 0, marginTop: 2 }} />
+            <div key={i} style={{
+              background: C.s2, border: `1px solid ${C.border}`, borderRadius: 16,
+              padding: '28px 24px', display: 'flex', flexDirection: 'column', gap: 16,
+              transition: 'border-color 0.2s',
+            }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = C.borderB}
+              onMouseLeave={e => e.currentTarget.style.borderColor = C.border}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ width: 44, height: 44, borderRadius: 12, background: C.orangeDim, border: `1px solid ${C.orangeBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <item.icon size={20} color={C.orange} strokeWidth={1.5} />
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontSize: 28, fontWeight: 900, color: C.orange, letterSpacing: '-1px', lineHeight: 1, ...S.serif }}>{item.metric}</div>
+                  <div style={{ fontSize: 11, color: C.t2, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{item.metricLabel}</div>
+                </div>
+              </div>
               <div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#fff', marginBottom: 5 }}>{item.title}</div>
-                <div style={{ fontSize: 13, color: C.t2, lineHeight: 1.6 }}>{item.desc}</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 6 }}>{item.title}</div>
+                <div style={{ fontSize: 13, color: C.t2, lineHeight: 1.65 }}>{item.desc}</div>
               </div>
             </div>
           ))}
