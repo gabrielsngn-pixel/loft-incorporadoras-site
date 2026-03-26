@@ -1,3 +1,5 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowRight, Landmark, BarChart3, Cpu, MessageCircle,
   FileText, Check, Zap, AlertTriangle, ChevronRight, ChevronLeft,
