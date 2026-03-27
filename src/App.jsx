@@ -158,10 +158,20 @@ const Navbar = ({ openModal }) => {
       }}>
         <LoftLogo markHeight={30} showTagline={true} />
         <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
-          {['Plataforma', 'Ecossistema', 'Resultados', 'Parceria'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} style={{ color: C.t2, fontSize: 13, fontWeight: 600, textDecoration: 'none', transition: 'color 0.2s' }}
+          {['Home', 'Ecossistema', 'Resultados', 'Parceria'].map((item) => (
+            <a 
+              key={item} 
+              href={item === 'Home' ? '#' : `#${item.toLowerCase()}`} 
+              onClick={(e) => {
+                if (item === 'Home') {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+              style={{ color: C.t2, fontSize: 13, fontWeight: 600, textDecoration: 'none', transition: 'color 0.2s' }}
               onMouseEnter={e => { e.target.style.color = '#fff'; }}
-              onMouseLeave={e => { e.target.style.color = C.t2; }}>
+              onMouseLeave={e => { e.target.style.color = C.t2; }}
+            >
               {item}
             </a>
           ))}
