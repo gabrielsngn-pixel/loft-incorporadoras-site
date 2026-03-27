@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import {
   ArrowRight, Landmark, BarChart3, Cpu, MessageCircle,
-  FileText, Check, Zap, ChevronRight,
+  FileText, Check, Zap, ChevronRight, Loader2,
   ShieldCheck, ArrowUpRight, Activity, Building2,
   TrendingUp, ChevronDown, DollarSign, Calculator, X
 } from 'lucide-react';
@@ -28,6 +28,9 @@ const C = {
 };
 
 const SF = { fontFamily: "'DM Serif Display', Georgia, 'Times New Roman', serif" };
+
+// Micro-componente para Leitura Dinâmica (Scannability Executiva)
+const HL = ({ children }) => <strong style={{ color: '#fff', fontWeight: 700 }}>{children}</strong>;
 
 // ─── LOFT OFFICIAL BRAND MARK ─────────────────────────────────────────────────
 const LoftMark = ({ height = 28, color = '#FF774A' }) => (
@@ -157,7 +160,7 @@ const Navbar = ({ openModal }) => {
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 72,
       }}>
         <LoftLogo markHeight={30} showTagline={true} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+        <div className="navbar-links" style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
           {['Home', 'Ecossistema', 'Resultados', 'Parceria'].map((item) => (
             <a 
               key={item} 
@@ -168,6 +171,7 @@ const Navbar = ({ openModal }) => {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
               }}
+              className="hide-mobile"
               style={{ color: C.t2, fontSize: 13, fontWeight: 600, textDecoration: 'none', transition: 'color 0.2s' }}
               onMouseEnter={e => { e.target.style.color = '#fff'; }}
               onMouseLeave={e => { e.target.style.color = C.t2; }}
@@ -175,7 +179,7 @@ const Navbar = ({ openModal }) => {
               {item}
             </a>
           ))}
-          <button onClick={openModal} style={{
+          <button className="navbar-cta" onClick={openModal} style={{
             background: C.orange, color: '#fff', border: 'none',
             padding: '9px 22px', borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: 'pointer',
             boxShadow: `0 0 28px ${C.orangeGlow}`,
@@ -195,13 +199,30 @@ const Navbar = ({ openModal }) => {
 const ContactModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({ nome: '', telefone: '', mensagem: '' });
   const [focus, setFocus] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Aplica máscara automática de telefone BR
+  const handlePhoneChange = (e) => {
+    let v = e.target.value.replace(/\D/g, '');
+    if (v.length <= 11) {
+      if (v.length > 2) v = `(${v.substring(0, 2)}) ${v.substring(2)}`;
+      if (v.length > 9) v = `${v.substring(0, 10)}-${v.substring(10)}`;
+      setFormData({...formData, telefone: v});
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const text = `Olá, vim pela plataforma do Canal Incorporações Loft!\n\n*Nome:* ${formData.nome}\n*Telefone:* ${formData.telefone}\n*Mensagem:* ${formData.mensagem}`;
-    const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/5521980220176?text=${encoded}`, '_blank');
-    onClose();
+    setIsSubmitting(true);
+    
+    // Simula tempo de processamento para UX executiva de segurança
+    setTimeout(() => {
+      const text = `Olá, vim pela plataforma do Canal Incorporações Loft!\n\n*Nome:* ${formData.nome}\n*Telefone:* ${formData.telefone}\n*Mensagem:* ${formData.mensagem}`;
+      const encoded = encodeURIComponent(text);
+      window.open(`https://wa.me/5521980220176?text=${encoded}`, '_blank');
+      setIsSubmitting(false);
+      onClose();
+    }, 800);
   };
 
   const inputStyle = (id) => ({
@@ -273,7 +294,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 <div>
                   <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: C.t2, marginBottom: 8 }}>Telefone / WhatsApp</label>
                   <input required type="tel" placeholder="(00) 00000-0000" 
-                    value={formData.telefone} onChange={e => setFormData({...formData, telefone: e.target.value})}
+                    value={formData.telefone} onChange={handlePhoneChange}
                     onFocus={() => setFocus('telefone')} onBlur={() => setFocus(null)}
                     style={inputStyle('telefone')} />
                 </div>
@@ -285,15 +306,24 @@ const ContactModal = ({ isOpen, onClose }) => {
                     style={{ ...inputStyle('mensagem'), resize: 'none' }} />
                 </div>
                 
-                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit"
+                <motion.button whileHover={!isSubmitting ? { scale: 1.02 } : {}} whileTap={!isSubmitting ? { scale: 0.98 } : {}} 
+                  type="submit" disabled={isSubmitting}
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '16px',
-                    background: '#00C16A', color: '#fff', border: 'none', borderRadius: 10, marginTop: 8,
-                    fontSize: 15, fontWeight: 700, cursor: 'pointer',
+                    background: isSubmitting ? '#00A35A' : '#00C16A', color: '#fff', border: 'none', borderRadius: 10, marginTop: 8,
+                    fontSize: 15, fontWeight: 700, cursor: isSubmitting ? 'wait' : 'pointer',
                     boxShadow: '0 8px 32px rgba(0, 193, 106, 0.25)',
+                    opacity: isSubmitting ? 0.8 : 1,
+                    transition: 'all 0.2s'
                   }}>
-                  <MessageCircle size={18} />
-                  Enviar via WhatsApp
+                  {isSubmitting ? (
+                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}>
+                      <Loader2 size={18} />
+                    </motion.div>
+                  ) : (
+                    <MessageCircle size={18} />
+                  )}
+                  {isSubmitting ? 'Conectando ao WhatsApp...' : 'Enviar via WhatsApp'}
                 </motion.button>
               </form>
             </div>
@@ -329,7 +359,7 @@ const Hero = ({ openModal }) => {
       <Glow style={{ width: 900, height: 600, top: -220, left: '50%', transform: 'translateX(-50%)' }} />
 
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 40px', position: 'relative', zIndex: 10, width: '100%' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+        <div className="responsive-grid hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
 
           <motion.div
             initial="hidden" animate="visible"
@@ -350,7 +380,7 @@ const Hero = ({ openModal }) => {
             </motion.div>
 
             <motion.div variants={fadeUp}>
-              <h1 style={{ fontSize: 64, fontWeight: 900, lineHeight: 1.01, color: '#fff', margin: 0, letterSpacing: '-2.5px', ...SF }}>
+              <h1 className="responsive-title" style={{ fontSize: 64, fontWeight: 900, lineHeight: 1.01, color: '#fff', margin: 0, letterSpacing: '-2.5px', ...SF }}>
                 Da venda ao banco,
                 <br />
                 <span style={{ color: C.orange }}>sem fricção.</span>
@@ -454,7 +484,7 @@ const Hero = ({ openModal }) => {
             </div>
 
             {/* Floating badge */}
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
+            <motion.div className="hide-mobile" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.7 }}
               style={{
                 position: 'absolute', bottom: -20, right: -20, background: '#fff',
@@ -478,6 +508,26 @@ const Hero = ({ openModal }) => {
   );
 };
 
+// ─── SOCIAL PROOF (NOVA SEÇÃO DE AUTORIDADE) ──────────────────────────────────
+const SocialProof = () => (
+  <section style={{ background: '#040404', borderBottom: `1px solid ${C.border}`, padding: '24px 40px', overflow: 'hidden' }}>
+    <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+      <span style={{ fontSize: 10, color: C.t3, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em' }}>
+        Conectado aos maiores players do mercado
+      </span>
+      {/* Usando texto estilizado para simular logos B2B robustos sem risco de quebra de SVG */}
+      <div style={{ display: 'flex', gap: 64, opacity: 0.4, filter: 'grayscale(100%)', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ fontFamily: "'Arial', sans-serif", fontSize: 20, fontWeight: 900, color: '#fff', letterSpacing: '-1px' }}>Itaú</div>
+        <div style={{ fontFamily: "'Helvetica', sans-serif", fontSize: 18, fontWeight: 700, color: '#fff' }}>bradesco</div>
+        <div style={{ fontFamily: "'Trebuchet MS', sans-serif", fontSize: 19, fontWeight: 900, color: '#fff', letterSpacing: '0.5px' }}>CAIXA</div>
+        <div style={{ fontFamily: "'Arial', sans-serif", fontSize: 19, fontWeight: 600, color: '#fff' }}>Santander</div>
+        <div style={{ fontFamily: "'Arial', sans-serif", fontSize: 19, fontWeight: 800, color: '#fff', fontStyle: 'italic' }}>inter</div>
+      </div>
+    </div>
+  </section>
+);
+
+
 // ─── BRIDGE ──────────────────────────────────────────────────────────────────
 const Bridge = () => {
   const steps = [
@@ -489,7 +539,7 @@ const Bridge = () => {
   ];
 
   return (
-    <section style={{ padding: '80px 40px', background: C.bg, borderTop: `1px solid ${C.border}` }}>
+    <section className="hide-mobile" style={{ padding: '80px 40px', background: C.bg, borderTop: `1px solid ${C.border}` }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
           <div style={{
@@ -549,7 +599,7 @@ const MetricBar = ({ label, before, after, unit, invert, started }) => {
     : `+${Math.round(((after - before) / before) * 100)}%`;
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 160px 1fr', alignItems: 'center', padding: '18px 0', borderBottom: `1px solid ${C.border}` }}>
+    <div className="metric-bar" style={{ display: 'grid', gridTemplateColumns: '1fr 160px 1fr', alignItems: 'center', padding: '18px 0', borderBottom: `1px solid ${C.border}` }}>
       <div style={{ paddingRight: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
           <span style={{ fontSize: 13, color: C.t2 }}>{label}</span>
@@ -621,7 +671,7 @@ const BeforeAfter = () => {
           </p>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 160px 1fr', marginBottom: 4 }}>
+        <div className="metric-bar hide-mobile" style={{ display: 'grid', gridTemplateColumns: '1fr 160px 1fr', marginBottom: 4 }}>
           <div style={{ paddingRight: 24, paddingBottom: 14, borderBottom: `1px solid ${C.borderB}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ width: 8, height: 8, borderRadius: 2, background: C.t3 }} />
@@ -641,14 +691,15 @@ const BeforeAfter = () => {
 
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ delay: 0.4 }}
+          className="responsive-grid"
           style={{
             marginTop: 40, padding: '28px 32px',
             background: C.orangeDim, border: `1px solid ${C.orangeBorder}`, borderRadius: 16,
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 32,
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 32, flexWrap: 'wrap'
           }}>
           {[{ val: '+44pp', label: 'na taxa de aprovação' }, { val: '3×', label: 'mais contratos simultâneos' },
             { val: '−31 dias', label: 'no ciclo de repasse' }, { val: '−33%', label: 'no custo financeiro' }].map((s, i) => (
-            <div key={i} style={{ textAlign: 'center' }}>
+            <div key={i} style={{ textAlign: 'center', flex: '1 1 auto' }}>
               <div style={{ fontSize: 34, fontWeight: 900, color: C.orange, letterSpacing: '-1.5px', ...SF, lineHeight: 1 }}>{s.val}</div>
               <div style={{ fontSize: 12, color: C.t2, marginTop: 5, fontWeight: 600 }}>{s.label}</div>
             </div>
@@ -661,12 +712,12 @@ const BeforeAfter = () => {
 
 // ─── ORBITAL ECOSYSTEM ───────────────────────────────────────────────────────
 const modules = [
-  { id: 'multibanco', icon: Landmark,    label: 'Plataforma\nMultibanco',  angle: 270, desc: '6+ bancos em roteamento simultâneo. Score otimizado por perfil.' },
-  { id: 'portal',    icon: BarChart3,    label: 'Portal do\nParceiro',     angle: 330, desc: 'Cockpit em tempo real. Funil, métricas e alertas automáticos.' },
-  { id: 'simulador', icon: Calculator,   label: 'Simulador\nInteligente',  angle:  30, desc: 'Capacidade de compra com taxas reais. Conversão no topo do funil.' },
-  { id: 'aiforce',   icon: Cpu,          label: 'AI Force',                angle:  90, desc: '+10 tipos de documento. OCR + validação cruzada. Zero retrabalho.' },
-  { id: 'check',     icon: ShieldCheck,  label: 'Loft\nCheck',             angle: 150, desc: 'Checklist automático por regras bancárias. Diagnóstico em segundos.' },
-  { id: 'assistant', icon: MessageCircle,label: 'Assistente\nWhatsApp',    angle: 210, desc: 'Simulação completa em 15s. Comparativo multibanco instantâneo.' },
+  { id: 'multibanco', icon: Landmark,    label: 'Plataforma\nMultibanco',  angle: 270, desc: <>6+ bancos em roteamento simultâneo. <HL>Score otimizado por perfil</HL>.</> },
+  { id: 'portal',    icon: BarChart3,    label: 'Portal do\nParceiro',     angle: 330, desc: <>Cockpit em tempo real. Funil, métricas e <HL>alertas automáticos</HL>.</> },
+  { id: 'simulador', icon: Calculator,   label: 'Simulador\nInteligente',  angle:  30, desc: <>Capacidade de compra com taxas reais. <HL>Conversão no topo do funil</HL>.</> },
+  { id: 'aiforce',   icon: Cpu,          label: 'AI Force',                angle:  90, desc: <>+10 tipos de documento. <HL>OCR + validação cruzada</HL>. Zero retrabalho.</> },
+  { id: 'check',     icon: ShieldCheck,  label: 'Loft\nCheck',             angle: 150, desc: <>Checklist automático por regras bancárias. <HL>Diagnóstico em segundos</HL>.</> },
+  { id: 'assistant', icon: MessageCircle,label: 'Assistente\nWhatsApp',    angle: 210, desc: <>Simulação completa em 15s. <HL>Comparativo multibanco instantâneo</HL>.</> },
 ];
 
 const OrbitalEcosystem = () => {
@@ -704,9 +755,9 @@ const OrbitalEcosystem = () => {
           </p>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+        <div className="responsive-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
           
-          <div style={{ width: '100%', maxWidth: 560, margin: '0 auto', aspectRatio: '1' }}>
+          <div className="hide-mobile" style={{ width: '100%', maxWidth: 560, margin: '0 auto', aspectRatio: '1' }}>
             <svg viewBox={`0 0 ${VB} ${VB}`} width="100%" height="100%" style={{ display: 'block', overflow: 'visible' }}>
               <defs>
                 <radialGradient id="orbitBg" cx="50%" cy="50%" r="50%">
@@ -904,14 +955,14 @@ const ScaleSection = () => {
   return (
     <section id="resultados" style={{ padding: '120px 40px', background: C.s1, borderTop: `1px solid ${C.border}`, position: 'relative', overflow: 'hidden' }}>
       <Glow style={{ width: 500, height: 500, right: -80, top: '50%', transform: 'translateY(-50%)' }} />
-      <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center', position: 'relative', zIndex: 10 }}>
+      <div className="responsive-grid" style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center', position: 'relative', zIndex: 10 }}>
         
         <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
           <Tag s={{ marginBottom: 16 }}>Escala nacional</Tag>
           <h2 style={{ fontSize: 48, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-1.5px', ...SF, lineHeight: 1.1 }}>
             Maior intermediadora<br />de financiamento<br />imobiliário do Brasil
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 32 }}>
+          <div className="responsive-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 32 }}>
             {[
               { v: '1,2M', l: 'transações processadas', hl: false },
               { v: '26', l: 'estados com presença', hl: false },
@@ -922,7 +973,7 @@ const ScaleSection = () => {
               <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
                 style={{
-                  padding: '18px', borderRadius: 14, gridColumn: s.span ? 'span 2' : 'auto',
+                  padding: '18px', borderRadius: 14, gridColumn: s.span ? '1 / -1' : 'auto',
                   background: s.hl ? C.orangeDim : C.s2, border: `1px solid ${s.hl ? C.orangeBorder : C.border}`,
                   display: s.span ? 'flex' : 'block', alignItems: 'center', gap: 16,
                 }}>
@@ -933,7 +984,7 @@ const ScaleSection = () => {
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+        <motion.div className="hide-mobile" initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
           style={{ position: 'relative', height: 420, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 60% 60% at 50% 50%,rgba(255,90,0,0.05),transparent)', borderRadius: '50%' }} />
           <svg viewBox="0 0 300 340" style={{ width: '80%', height: '80%', position: 'absolute' }}>
@@ -968,11 +1019,11 @@ const PartnershipSection = () => {
   const [activeIdx, setActiveIdx] = useState(null);
 
   const nodes = [
-    { icon: Landmark, label: 'Plataforma\nMultibanco', details: ['Um único cadastro', 'Acesso simultâneo a todos os bancos', 'Motor de roteamento inteligente'] },
-    { icon: FileText, label: 'Documentação\nAutomatizada', details: ['AI Force + Loft Check', 'Leitura de +10 tipos de documentos', 'Dossiê automático sem retrabalho'] },
-    { icon: Cpu, label: 'Loft OS', details: ['Motor multibanco', 'Roteamento inteligente por score', 'Adequação bancária automática'], isLoft: true },
-    { icon: Landmark, label: 'Bancos\nParceiros', details: ['6+ instituições conectadas', 'Competição de taxas em tempo real', 'Aprovação média de 98%'] },
-    { icon: DollarSign, label: 'Caixa\nRealizado', details: ['Liberação em 15 dias', '−3 p.p. no custo financeiro', 'VGV convertido em resultado'] },
+    { icon: Landmark, label: 'Plataforma\nMultibanco', details: ['Um único cadastro', <><HL>Acesso simultâneo</HL> a todos os bancos</>, 'Motor de roteamento inteligente'] },
+    { icon: FileText, label: 'Documentação\nAutomatizada', details: ['AI Force + Loft Check', 'Leitura de +10 tipos de documentos', <><HL>Dossiê automático</HL> sem retrabalho</>] },
+    { icon: Cpu, label: 'Loft OS', details: ['Motor multibanco', 'Roteamento inteligente por score', <><HL>Adequação bancária</HL> automática</>], isLoft: true },
+    { icon: Landmark, label: 'Bancos\nParceiros', details: ['6+ instituições conectadas', <><HL>Competição de taxas</HL> em tempo real</>, 'Aprovação média de 98%'] },
+    { icon: DollarSign, label: 'Caixa\nRealizado', details: [<><HL>Liberação em 15 dias</HL></>, '−3 p.p. no custo financeiro', 'VGV convertido em resultado'] },
   ];
 
   return (
@@ -990,7 +1041,7 @@ const PartnershipSection = () => {
           </p>
         </motion.div>
 
-        <div style={{ position: 'relative' }}>
+        <div className="hide-mobile" style={{ position: 'relative' }}>
           <div style={{ position: 'absolute', top: 34, left: '10%', right: '10%', height: 2, background: `linear-gradient(90deg,${C.border},${C.orange} 40%,${C.orange} 60%,${C.border})`, zIndex: 0 }} />
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', position: 'relative', zIndex: 1 }}>
             {nodes.map((node, i) => {
@@ -1057,11 +1108,12 @@ const PartnershipSection = () => {
         </div>
 
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
+          className="responsive-grid"
           style={{ marginTop: 64, display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
           {[
-            { icon: TrendingUp, metric: '35%', ml: 'mais ágil', title: 'Velocidade e previsibilidade', desc: 'Esteira 35% mais rápida que o mercado e maior taxa de aprovação.' },
-            { icon: DollarSign, metric: '−3pp', ml: 'no custo', title: 'Giro de capital acelerado', desc: 'Custo financeiro reduzido. Lucro planejado = lucro realizado.' },
-            { icon: ShieldCheck, metric: '98%', ml: 'aprovação', title: 'Menor risco de distrato', desc: 'Aprovação rápida reduz a janela de exposição ao risco de desistência.' },
+            { icon: TrendingUp, metric: '35%', ml: 'mais ágil', title: 'Velocidade e previsibilidade', desc: <>Esteira <HL>35% mais rápida</HL> que o mercado e <HL>maior taxa</HL> de aprovação.</> },
+            { icon: DollarSign, metric: '−3pp', ml: 'no custo', title: 'Giro de capital acelerado', desc: <><HL>Custo financeiro reduzido</HL>. Lucro planejado = <HL>lucro realizado</HL>.</> },
+            { icon: ShieldCheck, metric: '98%', ml: 'aprovação', title: 'Menor risco de distrato', desc: <><HL>Aprovação rápida</HL> reduz a janela de exposição ao risco de desistência.</> },
           ].map((item, i) => (
             <motion.div key={i} whileHover={{ borderColor: C.borderB, y: -3 }}
               style={{ background: C.s2, border: `1px solid ${C.border}`, borderRadius: 16, padding: '26px 22px', display: 'flex', flexDirection: 'column', gap: 14, transition: 'border-color 0.2s, transform 0.2s', cursor: 'default' }}>
@@ -1090,11 +1142,11 @@ const PartnershipSection = () => {
 const FAQ = () => {
   const [open, setOpen] = useState(null);
   const faqs = [
-    { q: 'Quanto custa a plataforma?', a: 'A Loft opera em modelo de resultado — sem mensalidade, sem taxa de setup. A remuneração é atrelada ao sucesso do repasse. Fale com um especialista para estruturar o modelo ideal para o seu volume.' },
-    { q: 'Com quais bancos a Loft opera?', a: 'Caixa Econômica Federal, Itaú, Bradesco, Santander, Inter e BRB — com expansão contínua. Um único cadastro acessa todos simultaneamente.' },
-    { q: 'Em quanto tempo vejo resultado?', a: 'Incorporadoras que ativam a plataforma reduzem o ciclo de repasse em 35% nos primeiros 60 dias. O impacto no fluxo de caixa é imediato.' },
-    { q: 'A Loft substitui meu time de crédito?', a: 'Não substitui — amplifica. A automação elimina o retrabalho operacional, liberando seu time para fechar contratos. Especialistas Loft cobrem reversão de crédito negado.' },
-    { q: 'Precisa de integração complexa?', a: 'Não. A plataforma ativa em menos de 48h. Sem integração de sistemas, sem custo de TI. O onboarding é guiado pela equipe Loft do início ao primeiro repasse.' },
+    { q: 'Quanto custa a plataforma?', a: <>A Loft opera em modelo de resultado — <HL>sem mensalidade, sem taxa de setup</HL>. A remuneração é atrelada ao sucesso do repasse. Fale com um especialista para estruturar o modelo ideal para o seu volume.</> },
+    { q: 'Com quais bancos a Loft opera?', a: <>Caixa Econômica Federal, Itaú, Bradesco, Santander, Inter e BRB — com expansão contínua. <HL>Um único cadastro acessa todos simultaneamente</HL>.</> },
+    { q: 'Em quanto tempo vejo resultado?', a: <>Incorporadoras que ativam a plataforma reduzem o ciclo de repasse em <HL>35% nos primeiros 60 dias</HL>. O impacto no <HL>fluxo de caixa é imediato</HL>.</> },
+    { q: 'A Loft substitui meu time de crédito?', a: <>Não substitui — <HL>amplifica</HL>. A automação elimina o retrabalho operacional, liberando seu time para fechar contratos. Especialistas Loft cobrem reversão de crédito negado.</> },
+    { q: 'Precisa de integração complexa?', a: <>Não. A plataforma <HL>ativa em menos de 48h</HL>. Sem integração de sistemas, sem custo de TI. O onboarding é guiado pela equipe Loft do início ao primeiro repasse.</> },
   ];
 
   return (
@@ -1149,7 +1201,7 @@ const CTA = ({ openModal }) => {
         style={{ maxWidth: 760, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 22 }}>
         
         <Tag>Ative a infraestrutura agora</Tag>
-        <h2 style={{ fontSize: 60, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1.02, letterSpacing: '-2px', ...SF }}>
+        <h2 className="responsive-title" style={{ fontSize: 60, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1.02, letterSpacing: '-2px', ...SF }}>
           Seu pipeline de crédito<br /><span style={{ color: C.orange }}>não deveria esperar.</span>
         </h2>
         <p style={{ fontSize: 17, color: C.t2, margin: 0, lineHeight: 1.8, maxWidth: 480 }}>
@@ -1163,6 +1215,7 @@ const CTA = ({ openModal }) => {
             background: C.orange, color: '#fff', border: 'none', borderRadius: 12,
             fontSize: 16, fontWeight: 800, cursor: 'pointer', letterSpacing: '0.01em',
             boxShadow: `0 16px 56px ${C.orangeGlow}`,
+            marginBottom: 10
           }}>
           <Zap size={18} />
           Ativar minha operação
@@ -1171,7 +1224,7 @@ const CTA = ({ openModal }) => {
           </motion.div>
         </motion.button>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14, width: '100%', maxWidth: 560, marginTop: 4 }}>
+        <div className="responsive-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14, width: '100%', maxWidth: 560, marginTop: 4 }}>
           {[{ icon: Zap, val: '48h', label: 'para ativar' }, { icon: Check, val: '0', label: 'custo inicial' }, { icon: Activity, val: '30 dias', label: 'primeiro resultado' }].map((item, i) => (
             <div key={i} style={{ padding: '14px 16px', background: 'rgba(255,255,255,0.03)', border: `1px solid ${C.border}`, borderRadius: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
               <item.icon size={16} color={C.orange} strokeWidth={2} />
@@ -1187,10 +1240,10 @@ const CTA = ({ openModal }) => {
 
 // ─── FOOTER ──────────────────────────────────────────────────────────────────
 const Footer = () => (
-  <footer style={{ background: '#040404', borderTop: `1px solid ${C.border}`, padding: '36px 40px' }}>
-    <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+  <footer style={{ background: '#040404', borderTop: `1px solid ${C.border}`, padding: '36px 40px', paddingBottom: '100px' }}>
+    <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
       <LoftLogo markHeight={24} showTagline={true} />
-      <p style={{ fontSize: 12, color: C.t3, margin: 0 }}>
+      <p style={{ fontSize: 12, color: C.t3, margin: 0, textAlign: 'center' }}>
         © {new Date().getFullYear()} Loft Canal Incorporações. Infraestrutura de crédito imobiliário.
       </p>
     </div>
@@ -1207,8 +1260,44 @@ export default function App() {
       background: C.bg, color: C.t1, lineHeight: 1.5,
       WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale',
     }}>
+      {/* Estilos Globais Injetados para Otimização Mobile (Media Queries) */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .mobile-floating-cta { display: none; }
+        @media (max-width: 768px) {
+          .mobile-floating-cta {
+            display: flex;
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+            z-index: 998;
+            background: ${C.orange};
+            color: #fff;
+            border-radius: 12px;
+            padding: 18px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 800;
+            box-shadow: 0 16px 40px rgba(255,119,74,0.4);
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s;
+          }
+          .mobile-floating-cta:active { transform: scale(0.96); }
+          .navbar-cta { display: none !important; }
+          .hide-mobile { display: none !important; }
+          .responsive-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .responsive-title { font-size: 42px !important; letter-spacing: -1.5px !important; }
+          .metric-bar { grid-template-columns: 1fr !important; text-align: center; gap: 16px; }
+          .metric-bar > div:nth-child(2) { padding: 16px 0; }
+        }
+      `}} />
+
       <Navbar openModal={() => setIsModalOpen(true)} />
       <Hero openModal={() => setIsModalOpen(true)} />
+      <SocialProof />
       <Bridge />
       <BeforeAfter />
       <OrbitalEcosystem />
@@ -1218,6 +1307,11 @@ export default function App() {
       <CTA openModal={() => setIsModalOpen(true)} />
       <Footer />
       
+      {/* Botão Fixo Mobile */}
+      <button className="mobile-floating-cta" onClick={() => setIsModalOpen(true)}>
+        <Zap size={18} /> Ativar minha operação
+      </button>
+
       {/* Modals Globais */}
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
